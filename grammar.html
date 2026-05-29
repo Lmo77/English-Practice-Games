@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nunnas Grammar Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#2d3561;--navy2:#3d4878;--teal:#00cec9;--teal2:#00b5b0;--tealp:#e0fafa;--purple:#a29bfe;--purplep:#eeeeff;--purpled:#6c5ce7;--green:#00b894;--greenp:#e6faf5;--greend:#007a63;--coral:#e17055;--coralp:#fff0ed;--corald:#a84f20;--amber:#f9a825;--amberp:#fff8e6;--red:#d63031;--redp:#fff0f0;--text:#2d2d2d;--muted:#6b7280;--border:#e5e7f0;--bg:#f5f6ff;--rad:16px;}
+body{font-family:"Nunito",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 50%,#4a5490 100%);padding:2rem 1.5rem 5rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;width:320px;height:320px;background:rgba(0,206,201,0.08);border-radius:50%;top:-80px;right:-60px;}
+.hero::after{content:"";position:absolute;width:200px;height:200px;background:rgba(162,155,254,0.1);border-radius:50%;bottom:-50px;left:-40px;}
+.hero-logo{background:white;border-radius:12px;padding:8px 20px;display:inline-block;margin-bottom:1.25rem;}
+.hero h1{font-family:"Lora",serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#fff;margin-bottom:0.4rem;position:relative;z-index:1;}
+.hero p{font-size:0.9rem;color:rgba(255,255,255,0.75);max-width:460px;margin:0 auto;line-height:1.7;position:relative;z-index:1;}
+.wrap{max-width:720px;margin:-2.5rem auto 0;padding:0 1.25rem 4rem;position:relative;z-index:10;}
+.panel{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,0.10);margin-bottom:1.5rem;overflow:hidden;}
+.phdr{background:var(--navy);color:white;padding:1rem 1.5rem;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.phdr h2{font-size:0.95rem;font-weight:800;flex:1;}
+.ti{font-size:1rem;transition:transform 0.3s;}
+.phdr.open .ti{transform:rotate(180deg);}
+.pbody{padding:1.5rem;display:none;}
+.pbody.open{display:block;}
+input[type=text],input[type=password],input[type=number],select{width:100%;border:2px solid var(--border);border-radius:10px;padding:0.7rem 1rem;font-size:0.95rem;font-family:"Nunito",sans-serif;color:var(--text);background:#fdfeff;}
+input:focus,select:focus{outline:none;border-color:var(--teal);}
+.sbox{background:#1a1f3c;border-radius:14px;padding:1.25rem;margin-top:0.75rem;}
+.sbox-lbl{font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:rgba(255,255,255,0.6);margin-bottom:10px;}
+.sbox-lbl .opt{font-weight:600;text-transform:none;letter-spacing:0;color:rgba(255,255,255,0.4);}
+.url-row{display:flex;gap:8px;}
+.url-row input{flex:1;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:8px;padding:0.65rem 0.85rem;font-size:0.88rem;color:white;}
+.url-row input::placeholder{color:rgba(255,255,255,0.3);}
+.url-row input:focus{outline:none;border-color:var(--teal);}
+.test-btn{background:var(--teal);color:white;border:none;border-radius:8px;padding:0.65rem 1rem;font-size:0.85rem;font-weight:800;font-family:"Nunito",sans-serif;cursor:pointer;white-space:nowrap;}
+.sstat{font-size:0.82rem;margin-top:8px;min-height:18px;}
+.sstat.ok{color:#55efc4;}.sstat.err{color:#fab1a0;}.sstat.loading{color:rgba(255,255,255,0.5);}
+.sprev{margin-top:8px;font-size:0.8rem;color:rgba(255,255,255,0.6);display:none;}
+.sprev-row{padding:2px 0;}
+.gen-box{background:linear-gradient(135deg,#1a1f3c,var(--navy));border-radius:12px;padding:1.25rem;margin-top:1.25rem;}
+.gen-lbl{font-size:0.8rem;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;}
+.gen-btn{width:100%;background:var(--teal);color:white;border:none;border-radius:10px;padding:0.85rem;font-size:1rem;font-weight:800;font-family:"Nunito",sans-serif;cursor:pointer;margin-top:10px;}
+.link-out{margin-top:10px;display:none;}
+.link-out textarea{width:100%;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:8px;padding:0.65rem 0.85rem;font-size:0.82rem;font-family:monospace;color:white;height:80px;resize:none;}
+.copy-btn{width:100%;background:var(--green);color:white;border:none;border-radius:8px;padding:0.7rem;font-size:0.9rem;font-weight:800;font-family:"Nunito",sans-serif;cursor:pointer;margin-top:6px;}
+.copy-btn.copied{background:#636e72;}
+.link-note{font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:8px;line-height:1.5;}
+.how-to{background:#f8f6ff;border:2px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.25rem;}
+.how-to h3{font-size:0.88rem;font-weight:800;color:var(--navy);margin-bottom:10px;}
+.step{display:flex;gap:10px;margin-bottom:10px;}
+.step:last-child{margin-bottom:0;}
+.sn{width:24px;height:24px;min-width:24px;border-radius:50%;background:var(--teal);color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.st{font-size:0.85rem;line-height:1.6;}
+.st strong{font-weight:800;color:var(--navy);}
+.st code{background:var(--tealp);color:var(--teal2);border-radius:4px;padding:1px 6px;font-size:0.8rem;font-family:monospace;}
+.scard{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,0.10);overflow:hidden;}
+.shdr{padding:1.5rem 1.5rem 0;}
+.shdr h2{font-family:"Lora",serif;font-size:1.2rem;color:var(--navy);margin-bottom:0.3rem;}
+.shdr p{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+.sbody{padding:1.5rem;}
+.load-box{background:var(--purplep);border-radius:var(--rad);padding:2rem;text-align:center;}
+.spinner{font-size:1.5rem;}
+.bank-info{border-radius:12px;padding:0.85rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;border:2px solid var(--teal);background:var(--tealp);}
+.bank-info .ico{font-size:1.4rem;}
+.bank-info .txt{font-size:0.9rem;color:var(--greend);}
+.bank-info .txt strong{font-weight:900;color:var(--navy);}
+.setup-sec{margin-bottom:1.5rem;}
+.setup-sec h3{font-size:0.92rem;font-weight:800;color:var(--navy);margin-bottom:0.6rem;}
+.pill{display:flex;flex-wrap:wrap;gap:8px;}
+.pill label{display:inline-flex;flex-direction:column;align-items:center;padding:7px 16px;border:2px solid var(--border);border-radius:14px;font-size:0.9rem;font-weight:800;cursor:pointer;transition:all 0.2s;background:white;line-height:1.2;}
+.pill label small{font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;margin-top:1px;}
+.pill input{display:none;}
+.pill input:checked+label{border-color:var(--purpled);background:var(--purpled);color:white;}
+.pill input:checked+label small{color:rgba(255,255,255,0.8);}
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0.5rem;}
+.game-card{border:2px solid var(--border);border-radius:14px;padding:1.1rem;cursor:pointer;transition:all 0.2s;background:white;text-align:center;}
+.game-card:hover{border-color:var(--teal);background:var(--tealp);transform:translateY(-2px);}
+.g-ico{font-size:2rem;display:block;margin-bottom:6px;}
+.g-name{font-size:0.95rem;font-weight:800;color:var(--navy);}
+.g-desc{font-size:0.75rem;color:var(--muted);margin-top:3px;line-height:1.4;}
+.prog-bar{background:white;border-radius:12px;border:2px solid var(--border);padding:1rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.pb-wrap{flex:1;min-width:100px;height:8px;background:var(--purplep);border-radius:4px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:4px;background:var(--teal);transition:width 0.4s;width:0;}
+.pb-txt{font-size:0.8rem;font-weight:800;color:var(--muted);}
+.okct{font-size:0.85rem;font-weight:800;color:var(--greend);background:var(--greenp);border-radius:20px;padding:3px 10px;}
+.noct{font-size:0.85rem;font-weight:800;color:#7a2e1a;background:var(--coralp);border-radius:20px;padding:3px 10px;}
+/* sentence / gap display */
+.q-display{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--rad);padding:1.75rem 1.5rem;text-align:center;margin-bottom:1.25rem;color:white;}
+.q-pt{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--teal);margin-bottom:0.6rem;}
+.q-sentence{font-size:1.3rem;font-weight:700;line-height:1.6;font-family:"Lora",serif;}
+.q-blank{display:inline-block;min-width:70px;border-bottom:3px solid var(--teal);margin:0 4px;color:var(--teal);font-weight:800;}
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:1rem;}
+.opt{display:flex;align-items:center;gap:12px;background:white;border:2px solid var(--border);border-radius:12px;padding:0.85rem 1.1rem;cursor:pointer;font-family:"Nunito",sans-serif;font-size:1rem;font-weight:700;color:var(--text);transition:all 0.2s;text-align:left;width:100%;}
+.opt:hover:not(:disabled){border-color:var(--teal);background:var(--tealp);}
+.opt.correct{border-color:var(--green)!important;background:var(--greenp)!important;color:var(--greend)!important;}
+.opt.wrong{border-color:var(--coral)!important;background:var(--coralp)!important;color:#7a2e1a!important;}
+.opt-l{font-size:11px;font-weight:800;background:var(--border);border-radius:4px;padding:2px 8px;flex-shrink:0;}
+.type-row{display:flex;gap:8px;margin-bottom:1rem;}
+.type-input{flex:1;border:2px solid var(--border);border-radius:12px;padding:0.85rem 1.1rem;font-size:1.1rem;font-weight:700;font-family:"Nunito",sans-serif;text-align:center;}
+.type-input.correct{border-color:var(--green);background:var(--greenp);}
+.type-input.wrong{border-color:var(--coral);background:var(--coralp);}
+/* tokens (spot the mistake) */
+.tokens{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:1rem;}
+.token{background:white;border:2px solid var(--border);border-radius:10px;padding:0.6rem 0.9rem;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:"Lora",serif;transition:all 0.15s;}
+.token:hover:not(:disabled){border-color:var(--purple);background:var(--purplep);}
+.token.correct{border-color:var(--green)!important;background:var(--greenp)!important;color:var(--greend)!important;}
+.token.wrong{border-color:var(--coral)!important;background:var(--coralp)!important;color:#7a2e1a!important;}
+/* tiles (sentence builder) */
+.tile-line{min-height:56px;border:2px dashed var(--border);border-radius:12px;padding:0.6rem;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:1rem;background:#fafbff;}
+.tile-line:empty::before{content:"Tap the words below in order...";color:var(--muted);font-size:0.85rem;font-weight:600;padding:0 6px;}
+.tile-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:1rem;}
+.tile{background:var(--purplep);border:2px solid var(--purple);border-radius:10px;padding:0.55rem 0.9rem;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:"Lora",serif;color:var(--purpled);transition:all 0.15s;}
+.tile:hover{transform:translateY(-2px);}
+.tile.placed{background:var(--navy);border-color:var(--navy);color:white;}
+/* beat the clock */
+.bt-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:1.25rem;flex-wrap:wrap;}
+.bt-timer{font-size:1.8rem;font-weight:900;color:var(--amber);background:var(--amberp);border-radius:12px;padding:6px 18px;min-width:90px;text-align:center;}
+.bt-timer.urgent{color:var(--coral);background:var(--coralp);}
+.bt-stat{display:flex;gap:8px;}
+.bt-prompt{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--rad);padding:1.75rem 1.5rem;text-align:center;margin-bottom:1.25rem;}
+.bt-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.bt-chip{background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.25);border-radius:12px;padding:0.7rem 1.1rem;min-width:80px;}
+.bt-chip .lbl{font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.5);margin-bottom:3px;}
+.bt-chip .val{font-size:1.15rem;font-weight:800;color:white;font-family:"Lora",serif;}
+.bt-chip.tense .val{color:var(--teal);}
+.bt-fb{font-size:0.95rem;font-weight:700;text-align:center;min-height:22px;margin-bottom:0.5rem;}
+.bt-fb.ok{color:var(--greend);}
+.bt-fb.no{color:var(--corald);}
+.tog-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.tog{display:inline-flex;align-items:center;padding:7px 14px;border:2px solid var(--border);border-radius:12px;font-size:0.85rem;font-weight:800;cursor:pointer;background:white;user-select:none;transition:all 0.2s;}
+.tog.on{border-color:var(--teal);background:var(--tealp);color:var(--teal2);}
+.feedback{display:none;border-radius:12px;padding:0.9rem 1.1rem;font-size:0.9rem;line-height:1.6;margin-bottom:1rem;}
+.feedback.correct{background:var(--greenp);color:var(--greend);display:block;}
+.feedback.wrong{background:var(--coralp);color:#7a2e1a;display:block;}
+.feedback .rule{margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,0.08);}
+.feedback .rule b{color:var(--navy);}
+.feedback .ex{font-style:italic;opacity:0.85;margin-top:3px;}
+.done-card{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--rad);padding:2rem;text-align:center;margin-bottom:1.25rem;color:white;}
+.done-card .em{font-size:2.5rem;}
+.done-card h2{font-family:"Lora",serif;font-size:1.4rem;margin:0.5rem 0;}
+.done-score{font-size:2.2rem;font-weight:900;color:var(--teal);margin:0.5rem 0;}
+.done-card p{font-size:0.88rem;color:rgba(255,255,255,0.75);line-height:1.6;}
+.btn{border:none;border-radius:12px;padding:0.85rem 1.5rem;font-size:0.95rem;font-weight:800;font-family:"Nunito",sans-serif;cursor:pointer;width:100%;margin-top:0.5rem;}
+.btn-teal{background:var(--teal);color:white;}
+.btn-teal:hover:not(:disabled){background:var(--teal2);}
+.btn-navy{background:var(--navy);color:white;}
+.btn-outline{background:white;color:var(--navy);border:2px solid var(--navy);}
+.btn:disabled{opacity:0.45;cursor:not-allowed;}
+.err-msg{background:var(--redp);border:1.5px solid #ffb3b3;border-radius:10px;padding:0.85rem 1rem;font-size:0.88rem;color:#7a1a1a;margin-bottom:1rem;line-height:1.6;display:none;}
+.tip{background:var(--purplep);border-radius:10px;padding:0.85rem 1rem;font-size:0.85rem;color:var(--purpled);line-height:1.65;margin-top:0.75rem;}
+.back-link{font-size:0.82rem;font-weight:700;color:var(--muted);cursor:pointer;margin-bottom:0.85rem;display:inline-block;}
+.back-link:hover{color:var(--navy);}
+@media(max-width:520px){.game-grid{grid-template-columns:1fr 1fr;}.hero{padding:1.75rem 1rem 4rem;}.sbody,.pbody{padding:1.1rem;}.q-sentence{font-size:1.1rem;}.bt-chips{gap:8px;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-logo"><span style="font-family:'Lora',serif;font-size:1.4rem;font-weight:700;color:#2d3561;letter-spacing:1px;">Nunnas</span></div>
+  <h1>Grammar Support</h1>
+  <p>Choose your level, pick a game, and practise English grammar!</p>
+</div>
+<div class="wrap">
+
+<!-- TEACHER PANEL (hidden unless ?teacher=CODE) -->
+<div class="panel" id="teacherPanel" style="display:none;">
+  <div class="phdr" id="tHdr" onclick="togglePanel()">
+    <span>&#128295;</span><h2>Teacher &mdash; set up your grammar app</h2><span class="ti">&#9660;</span>
+  </div>
+  <div class="pbody" id="tBody">
+    <div class="how-to">
+      <h3>How to set up (4 tabs in one Google Sheet)</h3>
+      <div class="step"><div class="sn">1</div><div class="st"><strong>sentences</strong> tab (required) &mdash; headers: <code>cefr</code> <code>grammar_point</code> <code>sentence</code> <code>answer</code> <code>rule</code> <code>example</code> <code>distractors</code>. Put <code>___</code> in the sentence where the gap is. <code>distractors</code> is optional.</div></div>
+      <div class="step"><div class="sn">2</div><div class="st"><strong>verbs</strong> tab (for Beat the Clock) &mdash; headers: <code>cefr</code> <code>base</code> <code>third_person</code> <code>past_simple</code> <code>past_participle</code> <code>ing_form</code>.</div></div>
+      <div class="step"><div class="sn">3</div><div class="st"><strong>adjectives</strong> tab (optional) &mdash; headers: <code>cefr</code> <code>base</code> <code>comparative</code> <code>superlative</code> <code>adverb</code>.</div></div>
+      <div class="step"><div class="sn">4</div><div class="st"><strong>word_banks</strong> tab (optional) &mdash; headers: <code>group</code> <code>words</code> (words separated by <code>|</code>, e.g. <code>in|on|at</code>).</div></div>
+      <div class="step"><div class="sn">5</div><div class="st">For each tab: <strong>File &rarr; Share &rarr; Publish to web &rarr; that tab &rarr; .csv</strong>, then paste the URLs below, Test, and Generate the student link.</div></div>
+    </div>
+
+    <div class="sbox">
+      <div class="sbox-lbl">&#128221; Sentences CSV URL <span class="opt">(required)</span></div>
+      <div class="url-row"><input type="text" id="uSent" placeholder="Paste the sentences CSV URL..."><button class="test-btn" onclick="testTab('sent')">Test</button></div>
+      <div class="sstat" id="stSent"></div><div class="sprev" id="pvSent"></div>
+    </div>
+    <div class="sbox">
+      <div class="sbox-lbl">&#127939; Verbs CSV URL <span class="opt">(for Beat the Clock)</span></div>
+      <div class="url-row"><input type="text" id="uVerb" placeholder="Paste the verbs CSV URL..."><button class="test-btn" onclick="testTab('verb')">Test</button></div>
+      <div class="sstat" id="stVerb"></div><div class="sprev" id="pvVerb"></div>
+    </div>
+    <div class="sbox">
+      <div class="sbox-lbl">&#128290; Adjectives CSV URL <span class="opt">(optional)</span></div>
+      <div class="url-row"><input type="text" id="uAdj" placeholder="Paste the adjectives CSV URL..."><button class="test-btn" onclick="testTab('adj')">Test</button></div>
+      <div class="sstat" id="stAdj"></div><div class="sprev" id="pvAdj"></div>
+    </div>
+    <div class="sbox">
+      <div class="sbox-lbl">&#128218; Word banks CSV URL <span class="opt">(optional)</span></div>
+      <div class="url-row"><input type="text" id="uWb" placeholder="Paste the word_banks CSV URL..."><button class="test-btn" onclick="testTab('wb')">Test</button></div>
+      <div class="sstat" id="stWb"></div><div class="sprev" id="pvWb"></div>
+    </div>
+
+    <div class="gen-box">
+      <div class="gen-lbl">Share with your students</div>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.6);line-height:1.5;margin-top:4px;">One link with all your tabs baked in. Students see only the games &mdash; never this panel.</p>
+      <button class="gen-btn" onclick="generateLink()">Generate student link</button>
+      <div class="link-out" id="linkOut">
+        <textarea id="linkTxt" readonly onclick="this.select()"></textarea>
+        <button class="copy-btn" id="cpyBtn" onclick="copyLink()">Copy link</button>
+        <div class="link-note">Students open this link, choose a level and a game, and start practising.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STUDENT AREA -->
+<div class="scard" id="studentCard">
+  <div class="shdr">
+    <h2 id="sTitle">Grammar Practice</h2>
+    <p id="sInstr">Connect your Google Sheet above, or open a teacher-shared link.</p>
+  </div>
+  <div class="sbody">
+    <div class="err-msg" id="errMsg"></div>
+    <div class="load-box" id="loadBox" style="display:none;"><span class="spinner">&#9203;</span><p>Loading your grammar bank...</p></div>
+
+    <!-- HOME: level + mode pick -->
+    <div id="homeArea" style="display:none;">
+      <div class="bank-info" id="bankInfo" style="display:none;"><div class="ico">&#9989;</div><div class="txt"><strong id="bankCt">0</strong> sentences loaded!</div></div>
+      <div class="setup-sec">
+        <h3>1 &mdash; Choose your level</h3>
+        <div class="pill" id="lvlPills">
+          <input type="radio" name="lvl" id="lvA1" value="A1" checked onchange="onLevelChange()"><label for="lvA1">A1<small>Beginner</small></label>
+          <input type="radio" name="lvl" id="lvA2" value="A2" onchange="onLevelChange()"><label for="lvA2">A2<small>Elementary</small></label>
+          <input type="radio" name="lvl" id="lvB1" value="B1" onchange="onLevelChange()"><label for="lvB1">B1<small>Intermediate</small></label>
+          <input type="radio" name="lvl" id="lvB2" value="B2" onchange="onLevelChange()"><label for="lvB2">B2<small>Upper Int.</small></label>
+          <input type="radio" name="lvl" id="lvC1" value="C1" onchange="onLevelChange()"><label for="lvC1">C1<small>Advanced</small></label>
+        </div>
+        <div class="tip" id="lvlNote" style="margin-top:0.6rem;"></div>
+      </div>
+      <div class="setup-sec">
+        <h3>2 &mdash; Choose a game</h3>
+        <div class="game-grid">
+          <div class="game-card" onclick="startMode('gap')"><span class="g-ico">&#9999;&#65039;</span><div class="g-name">Gap Filler</div><div class="g-desc">Type or tap the missing word</div></div>
+          <div class="game-card" onclick="startMode('spot')"><span class="g-ico">&#128269;</span><div class="g-name">Spot the Mistake</div><div class="g-desc">Find the wrong word in the sentence</div></div>
+          <div class="game-card" onclick="startMode('build')"><span class="g-ico">&#129513;</span><div class="g-name">Sentence Builder</div><div class="g-desc">Put the words in the right order</div></div>
+          <div class="game-card" onclick="openBeatSetup()"><span class="g-ico">&#9201;&#65039;</span><div class="g-name">Beat the Clock</div><div class="g-desc">Make verb &amp; adjective forms, fast!</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT THE CLOCK SETUP -->
+    <div id="beatSetup" style="display:none;">
+      <span class="back-link" onclick="backHome()">&larr; Back to games</span>
+      <div class="setup-sec">
+        <h3>What do you want to drill?</h3>
+        <div class="tog-grid" id="btDrillTogs">
+          <span class="tog on" id="dVerb" onclick="setDrill('verbs')">Verb tenses</span>
+          <span class="tog" id="dAdj" onclick="setDrill('adjectives')">Adjective forms</span>
+          <span class="tog" id="dMix" onclick="setDrill('mixed')">Mixed</span>
+        </div>
+      </div>
+      <div class="setup-sec" id="tenseSec">
+        <h3>Which verb tenses?</h3>
+        <div class="tog-grid" id="btTenseTogs">
+          <span class="tog on" data-tense="present simple" onclick="toggleTense(this)">Present simple</span>
+          <span class="tog on" data-tense="present continuous" onclick="toggleTense(this)">Present continuous</span>
+          <span class="tog on" data-tense="past simple" onclick="toggleTense(this)">Past simple</span>
+          <span class="tog" data-tense="past continuous" onclick="toggleTense(this)">Past continuous</span>
+          <span class="tog" data-tense="present perfect" onclick="toggleTense(this)">Present perfect</span>
+          <span class="tog" data-tense="future" onclick="toggleTense(this)">Future (will)</span>
+        </div>
+      </div>
+      <button class="btn btn-teal" id="btStartBtn" onclick="startBeat()">Start the clock &#9654;</button>
+      <div class="tip">&#128161; Type the full form, e.g. <strong>She went</strong> or <strong>bigger</strong>. Contractions like <strong>she's going</strong> are accepted.</div>
+    </div>
+
+    <!-- GAME PLAY -->
+    <div id="playArea" style="display:none;">
+      <span class="back-link" onclick="backHome()">&larr; Back to games</span>
+      <div class="prog-bar" id="progBar" style="display:none;">
+        <div class="pb-wrap"><div class="pb-fill" id="pbFill"></div></div>
+        <span class="pb-txt" id="pbTxt">0/0</span>
+        <span class="okct" id="okCt">&#10003; 0</span>
+        <span class="noct" id="noCt">&#10007; 0</span>
+      </div>
+      <div id="qHolder"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="btn btn-teal" id="checkBtn" style="display:none;" onclick="checkBuild()">Check answer</button>
+      <button class="btn btn-navy" id="nextBtn" style="display:none;" onclick="nextQuestion()">Next &#8594;</button>
+    </div>
+
+    <!-- BEAT THE CLOCK PLAY -->
+    <div id="beatPlay" style="display:none;">
+      <div class="bt-top">
+        <div class="bt-timer" id="btTimer">60</div>
+        <div class="bt-stat"><span class="okct" id="btScore">&#10003; 0</span><span class="noct" id="btStreak">&#128293; 0</span></div>
+      </div>
+      <div class="bt-prompt"><div class="bt-chips" id="btChips"></div></div>
+      <div class="bt-fb" id="btFb"></div>
+      <div class="type-row"><input type="text" id="btInput" class="type-input" placeholder="Type the form..." autocomplete="off" autocapitalize="off" autocorrect="off"></div>
+      <button class="btn btn-teal" onclick="submitBeat()">Submit</button>
+    </div>
+
+    <!-- SCORE -->
+    <div id="doneArea" style="display:none;">
+      <div class="done-card">
+        <div class="em" id="doneEmoji">&#127881;</div>
+        <h2>Session complete!</h2>
+        <div class="done-score" id="doneScore">0 / 0</div>
+        <p id="doneMsg"></p>
+      </div>
+      <button class="btn btn-teal" onclick="playAgain()">Play again</button>
+      <button class="btn btn-outline" onclick="backHome()">Choose another game</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ============ STATE ============
+var TEACHER_CODE = "nunnas2026";  // change this to your own secret word
+var sentences=[], verbs=[], adjectives=[], wordBanks=[];
+var urls={sentences:"",verbs:"",adjectives:"",wordbanks:""};
+var isStudentLink=false;
+var currentMode="";
+var queue=[], idx=0, okCount=0, noCount=0;
+var builtTiles=[], tileState=[];
+// beat the clock
+var btDrill="verbs", btEnabledTenses=["present simple","present continuous","past simple"];
+var btTimer=null, btTimeLeft=60, btScore=0, btStreak=0, btBest=0, btCurrent=null;
+
+// ============ HELPERS ============
+function ge(id){return document.getElementById(id);}
+function show(id){var e=ge(id);if(e)e.style.display="block";}
+function hide(id){var e=ge(id);if(e)e.style.display="none";}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+function norm(s){return (s||"").toLowerCase().trim().replace(/\s+/g," ").replace(/[.!?,;:]+$/,"");}
+function getLvl(){var r=document.querySelector('input[name="lvl"]:checked');return r?r.value:"A1";}
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function togglePanel(){var h=ge("tHdr"),b=ge("tBody");var o=b.classList.contains("open");b.classList.toggle("open",!o);h.classList.toggle("open",!o);}
+
+// ============ FETCH / PARSE ============
+function extractPubId(url){var m=url.match(/spreadsheets\/d\/e\/([^\/\?]+)/);return m?m[1]:null;}
+function getGid(url){var m=url.match(/gid=(\d+)/);return m?m[1]:"0";}
+function splitLine(line){var cols=[],cur="",inQ=false;for(var j=0;j<line.length;j++){if(line[j]==='"'){inQ=!inQ;}else if(line[j]===","&&!inQ){cols.push(cur);cur="";}else{cur+=line[j];}}cols.push(cur);return cols;}
+function parseCSV(text){
+  var rows=[];var lines=text.trim().split(/\r?\n/);
+  var headers=splitLine(lines[0]).map(function(h){return h.trim().toLowerCase().replace(/ /g,"_");});
+  for(var i=1;i<lines.length;i++){var cols=splitLine(lines[i]);if(!cols.join("").trim())continue;var obj={};headers.forEach(function(h,n){obj[h]=(cols[n]||"").trim();});rows.push(obj);}
+  return rows;
+}
+function parseGviz(text){
+  var rows=[];
+  try{var j=text.replace(/^[\s\S]*?\{/,"{").replace(/\);?\s*$/,"");var data=JSON.parse(j);if(!data.table||!data.table.rows)return rows;var hdrs=data.table.cols.map(function(c){return(c.label||"").toLowerCase().replace(/ /g,"_");});data.table.rows.forEach(function(row){var c=row.c||[];var obj={};var any=false;hdrs.forEach(function(h,i){var v=(c[i]&&c[i].v!=null)?String(c[i].v).trim():"";obj[h]=v;if(v)any=true;});if(any)rows.push(obj);});}catch(e){}
+  return rows;
+}
+function fetchSheet(url){
+  var id=extractPubId(url);var gid=getGid(url);var attempts=[];
+  if(id){var gu="https://docs.google.com/spreadsheets/d/e/"+id+"/gviz/tq?tqx=out:json&gid="+gid;attempts.push(fetch(gu).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){var rows=parseGviz(t);if(rows.length<1)throw 0;return rows;}));}
+  attempts.push(fetch(url).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){if(t.indexOf("<!DOCTYPE")!==-1)throw 0;var rows=parseCSV(t);if(rows.length<1)throw 0;return rows;}));
+  attempts.push(fetch("https://corsproxy.io/?"+encodeURIComponent(url)).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){if(t.indexOf("<!DOCTYPE")!==-1)throw 0;var rows=parseCSV(t);if(rows.length<1)throw 0;return rows;}));
+  return attempts.reduce(function(chain,a){return chain.catch(function(){return a;});});
+}
+
+// ============ DISTRACTOR ENGINE ============
+function formsOfMatch(list, keys, a){
+  for(var i=0;i<list.length;i++){
+    var forms=keys.map(function(k){return list[i][k];});
+    if(forms.map(norm).indexOf(a)>-1){
+      return forms.filter(function(f){return f && norm(f)!==a;});
+    }
+  }
+  return null;
+}
+function getDistractors(answer,count){
+  count=count||3;var a=norm(answer);var pool=[];
+  var fromVerbs=formsOfMatch(verbs,["base","third_person","past_simple","past_participle","ing_form"],a);
+  if(fromVerbs)pool=pool.concat(fromVerbs);
+  if(pool.length<count){var fromAdj=formsOfMatch(adjectives,["base","comparative","superlative","adverb"],a);if(fromAdj)pool=pool.concat(fromAdj);}
+  if(pool.length<count){for(var i=0;i<wordBanks.length;i++){if(wordBanks[i].words.map(norm).indexOf(a)>-1){pool=pool.concat(wordBanks[i].words.filter(function(w){return norm(w)!==a;}));break;}}}
+  // dedupe
+  var seen={},out=[];pool.forEach(function(p){var k=norm(p);if(!seen[k]){seen[k]=1;out.push(p);}});
+  return shuffle(out).slice(0,count);
+}
+function distractorsFor(row,count){
+  count=count||3;
+  if(row.distractors){var d=row.distractors.split("|").map(function(s){return s.trim();}).filter(function(s){return s && norm(s)!==norm(row.answer);});if(d.length>=1)return shuffle(d.slice()).slice(0,count);}
+  return getDistractors(row.answer,count);
+}
+
+// ============ LEVEL / HOME ============
+function byLevel(list){var lv=getLvl();return list.filter(function(r){return (r.cefr||"").toUpperCase()===lv;});}
+function onLevelChange(){
+  var n=byLevel(sentences).length;
+  ge("lvlNote").innerHTML="<strong>"+n+"</strong> sentence"+(n===1?"":"s")+" at "+getLvl()+". Verbs: "+byLevel(verbs).length+" &middot; Adjectives: "+byLevel(adjectives).length+".";
+}
+function backHome(){
+  if(btTimer){clearInterval(btTimer);btTimer=null;}
+  hide("playArea");hide("beatPlay");hide("beatSetup");hide("doneArea");
+  show("homeArea");ge("sTitle").textContent="Grammar Practice";ge("sInstr").textContent="Choose your level and a game below.";
+}
+
+// ============ TEACHER PANEL ============
+function tabCfg(which){
+  return {sent:{url:"uSent",stat:"stSent",prev:"pvSent",label:"sentence",req:["sentence","answer"]},
+          verb:{url:"uVerb",stat:"stVerb",prev:"pvVerb",label:"verb",req:["base"]},
+          adj:{url:"uAdj",stat:"stAdj",prev:"pvAdj",label:"adjective",req:["base"]},
+          wb:{url:"uWb",stat:"stWb",prev:"pvWb",label:"word bank",req:["group","words"]}}[which];
+}
+function testTab(which){
+  var c=tabCfg(which);var url=ge(c.url).value.trim();
+  if(!url){alert("Paste the URL first.");return;}
+  var stat=ge(c.stat),prev=ge(c.prev);stat.className="sstat loading";stat.textContent="Testing...";prev.style.display="none";
+  fetchSheet(url).then(function(rows){
+    var valid=rows.filter(function(r){return c.req.every(function(k){return r[k]&&r[k].length;});});
+    if(valid.length<1)throw new Error("No valid rows. Check headers: "+c.req.join(", "));
+    stat.className="sstat ok";stat.textContent="Connected! "+valid.length+" "+c.label+(valid.length===1?"":"s")+" found.";
+    if(which==="sent"){var pts={};valid.forEach(function(r){if(r.grammar_point)pts[r.grammar_point]=(pts[r.grammar_point]||0)+1;});var html='<div style="margin-bottom:3px;">Grammar points:</div>';Object.keys(pts).slice(0,10).forEach(function(p){html+='<div class="sprev-row">&bull; '+esc(p)+' ('+pts[p]+')</div>';});prev.innerHTML=html;prev.style.display="block";}
+  }).catch(function(e){stat.className="sstat err";stat.textContent="Failed: "+(e.message||"could not connect");});
+}
+function generateLink(){
+  var s=ge("uSent").value.trim(),v=ge("uVerb").value.trim(),a=ge("uAdj").value.trim(),w=ge("uWb").value.trim();
+  if(!s){alert("The sentences URL is required.");return;}
+  var base=window.location.href.split("?")[0];var parts=["sentences="+encodeURIComponent(s)];
+  if(v)parts.push("verbs="+encodeURIComponent(v));
+  if(a)parts.push("adjectives="+encodeURIComponent(a));
+  if(w)parts.push("wordbanks="+encodeURIComponent(w));
+  ge("linkTxt").value=base+"?"+parts.join("&");show("linkOut");
+}
+function copyLink(){var ta=ge("linkTxt");ta.select();try{document.execCommand("copy");}catch(e){}var b=ge("cpyBtn");b.textContent="Copied!";b.classList.add("copied");setTimeout(function(){b.textContent="Copy link";b.classList.remove("copied");},1500);}
+
+// ============ SHARED PLAY ============
+function fullSentence(row){return (row.sentence||"").replace("___",row.answer);}
+function updateProg(){
+  var total=queue.length;ge("pbTxt").textContent=idx+"/"+total;
+  ge("pbFill").style.width=total?Math.round((idx/total)*100)+"%":"0%";
+  ge("okCt").innerHTML="&#10003; "+okCount;ge("noCt").innerHTML="&#10007; "+noCount;
+}
+function showFeedback(correct,row){
+  var fb=ge("feedback");fb.className="feedback "+(correct?"correct":"wrong");
+  var head=correct?"&#10003; Correct!":"&#10007; Not quite \u2014 the answer is <b>"+esc(row.answer)+"</b>";
+  var rule=row.rule?'<div class="rule"><b>Rule:</b> '+esc(row.rule)+'</div>':'';
+  var ex=row.example?'<div class="ex">e.g. '+esc(row.example)+'</div>':'';
+  fb.innerHTML=head+rule+ex;
+}
+function startMode(mode){
+  currentMode=mode;
+  var pool=byLevel(sentences).filter(function(r){return r.sentence&&r.answer&&r.sentence.indexOf("___")>-1;});
+  if(mode==="spot")pool=pool.filter(function(r){return r.answer.trim().split(/\s+/).length===1 && distractorsFor(r,1).length>=1;});
+  if(mode==="build")pool=pool.filter(function(r){return fullSentence(r).trim().split(/\s+/).length>=3;});
+  if(pool.length<1){
+    var why=mode==="spot"?"Spot the Mistake needs single-word answers with at least one wrong form available (add verbs/adjectives/word_banks or a distractors column).":mode==="build"?"Sentence Builder needs sentences of 3+ words.":"No sentences found for this level.";
+    ge("errMsg").textContent=why;show("errMsg");return;
+  }
+  hide("errMsg");
+  queue=shuffle(pool.slice()).slice(0,Math.min(10,pool.length));
+  idx=0;okCount=0;noCount=0;
+  hide("homeArea");hide("doneArea");show("playArea");show("progBar");
+  ge("sTitle").textContent={gap:"Gap Filler",spot:"Spot the Mistake",build:"Sentence Builder"}[mode];
+  ge("sInstr").textContent={gap:"Type or tap the missing word.",spot:"Tap the word that is wrong.",build:"Tap the words in the correct order."}[mode];
+  updateProg();renderQuestion();
+}
+function renderQuestion(){
+  hide("feedback");hide("nextBtn");hide("checkBtn");
+  var fb=ge("feedback");fb.className="feedback";
+  var row=queue[idx];
+  if(currentMode==="gap")renderGap(row);
+  else if(currentMode==="spot")renderSpot(row);
+  else if(currentMode==="build")renderBuild(row);
+}
+function nextQuestion(){idx++;updateProg();if(idx>=queue.length){finishSession();}else{renderQuestion();}}
+
+// ---- GAP FILLER ----
+function renderGap(row){
+  var useType=Math.random()<0.5;
+  var dis=distractorsFor(row,3);
+  if(!useType && dis.length<1)useType=true; // need at least 1 distractor to tap
+  var pt=row.grammar_point?'<div class="q-pt">'+esc(row.grammar_point)+'</div>':'';
+  var sent=esc(row.sentence).replace("___",'<span class="q-blank">?</span>');
+  var html='<div class="q-display">'+pt+'<div class="q-sentence">'+sent+'</div></div>';
+  if(useType){
+    html+='<div class="type-row"><input type="text" id="gapInput" class="type-input" placeholder="Type the missing word..." autocomplete="off" autocapitalize="off" autocorrect="off"></div>';
+    html+='<button class="btn btn-teal" id="gapSubmit">Check</button>';
+    ge("qHolder").innerHTML=html;
+    var inp=ge("gapInput");inp.focus();
+    inp.addEventListener("keydown",function(e){if(e.key==="Enter")submitGapType(row);});
+    ge("gapSubmit").onclick=function(){submitGapType(row);};
+  }else{
+    var opts=shuffle([row.answer].concat(dis));
+    html+='<div class="opts" id="gapOpts"></div>';
+    ge("qHolder").innerHTML=html;
+    var letters=["A","B","C","D"];
+    opts.forEach(function(o,i){
+      var b=document.createElement("button");b.className="opt";b.innerHTML='<span class="opt-l">'+letters[i]+'</span>'+esc(o);
+      b.onclick=function(){pickGapTap(b,o,row);};ge("gapOpts").appendChild(b);
+    });
+  }
+}
+function submitGapType(row){
+  var inp=ge("gapInput");if(!inp||inp.disabled)return;var val=inp.value;
+  if(!val.trim())return;
+  var correct=norm(val)===norm(row.answer);
+  inp.disabled=true;inp.className="type-input "+(correct?"correct":"wrong");
+  var sb=ge("gapSubmit");if(sb)sb.style.display="none";
+  if(correct)okCount++;else noCount++;
+  showFeedback(correct,row);show("nextBtn");
+}
+function pickGapTap(btn,choice,row){
+  var opts=ge("gapOpts").querySelectorAll(".opt");opts.forEach(function(o){o.disabled=true;});
+  var correct=norm(choice)===norm(row.answer);
+  if(correct){btn.classList.add("correct");okCount++;}
+  else{btn.classList.add("wrong");noCount++;opts.forEach(function(o){if(norm(o.textContent)===norm(row.answer))o.classList.add("correct");});}
+  showFeedback(correct,row);show("nextBtn");
+}
+
+// ---- SPOT THE MISTAKE ----
+function renderSpot(row){
+  var wrong=distractorsFor(row,1)[0];
+  var parts=row.sentence.split("___");
+  var before=(parts[0]||"").trim().length?parts[0].trim().split(/\s+/):[];
+  var after=(parts[1]||"").trim().length?parts[1].trim().split(/\s+/):[];
+  var tokens=before.concat([wrong]).concat(after);
+  var errIdx=before.length;
+  var pt=row.grammar_point?'<div class="q-pt">'+esc(row.grammar_point)+'</div>':'';
+  var html='<div class="q-display">'+pt+'<div class="q-sentence" style="font-size:0.95rem;opacity:0.8;">Tap the wrong word</div></div><div class="tokens" id="spotTokens"></div>';
+  ge("qHolder").innerHTML=html;
+  tokens.forEach(function(tk,i){
+    var disp=(i===0)?cap(tk):tk;
+    var b=document.createElement("button");b.className="token";b.textContent=disp;
+    b.onclick=function(){pickSpot(b,i,errIdx,row,wrong);};ge("spotTokens").appendChild(b);
+  });
+}
+function pickSpot(btn,i,errIdx,row,wrong){
+  var toks=ge("spotTokens").querySelectorAll(".token");toks.forEach(function(t){t.disabled=true;});
+  var correct=(i===errIdx);
+  toks[errIdx].classList.add("correct");
+  if(correct){okCount++;}else{btn.classList.add("wrong");noCount++;}
+  var fb=ge("feedback");fb.className="feedback "+(correct?"correct":"wrong");
+  var head=correct?"&#10003; Yes! <b>"+esc(wrong)+"</b> is wrong \u2014 it should be <b>"+esc(row.answer)+"</b>":"&#10007; The wrong word was <b>"+esc(wrong)+"</b> \u2014 it should be <b>"+esc(row.answer)+"</b>";
+  var rule=row.rule?'<div class="rule"><b>Rule:</b> '+esc(row.rule)+'</div>':'';
+  var ex=row.example?'<div class="ex">e.g. '+esc(row.example)+'</div>':'';
+  fb.innerHTML=head+rule+ex;show("nextBtn");
+}
+
+// ---- SENTENCE BUILDER ----
+function renderBuild(row){
+  var full=fullSentence(row);
+  var words=full.trim().replace(/\s+/g," ").split(" ");
+  tileState=words.map(function(w,i){return {word:w,id:i,placed:false};});
+  // ensure scramble differs from original when possible
+  var order=tileState.map(function(t){return t.id;});
+  shuffle(order);
+  var pt=row.grammar_point?'<div class="q-pt">'+esc(row.grammar_point)+'</div>':'';
+  var html='<div class="q-display">'+pt+'<div class="q-sentence" style="font-size:0.95rem;opacity:0.8;">Build the sentence</div></div>';
+  html+='<div class="tile-line" id="tileLine"></div><div class="tile-bank" id="tileBank"></div>';
+  ge("qHolder").innerHTML=html;
+  builtTiles=[];
+  var bank=ge("tileBank");
+  order.forEach(function(id){
+    var t=tileState[id];
+    var b=document.createElement("button");b.className="tile";b.textContent=t.word;b.dataset.id=id;
+    b.onclick=function(){placeTile(id);};bank.appendChild(b);
+  });
+  ge("checkBtn").dataset.correct=norm(full);
+  show("checkBtn");
+}
+function placeTile(id){
+  var t=tileState[id];if(t.placed)return;t.placed=true;builtTiles.push(id);renderTiles();
+}
+function unplaceTile(id){
+  var t=tileState[id];if(!t.placed)return;t.placed=false;builtTiles=builtTiles.filter(function(x){return x!==id;});renderTiles();
+}
+function renderTiles(){
+  var line=ge("tileLine"),bank=ge("tileBank");line.innerHTML="";bank.innerHTML="";
+  builtTiles.forEach(function(id,pos){
+    var t=tileState[id];var b=document.createElement("button");b.className="tile placed";
+    b.textContent=(pos===0)?cap(t.word):t.word;b.onclick=function(){unplaceTile(id);};line.appendChild(b);
+  });
+  tileState.forEach(function(t){if(!t.placed){var b=document.createElement("button");b.className="tile";b.textContent=t.word;b.onclick=function(){placeTile(t.id);};bank.appendChild(b);}});
+}
+function checkBuild(){
+  if(!builtTiles.length)return;
+  var row=queue[idx];
+  var built=builtTiles.map(function(id){return tileState[id].word;}).join(" ");
+  var correct=norm(built)===ge("checkBtn").dataset.correct;
+  if(correct)okCount++;else noCount++;
+  hide("checkBtn");
+  // lock tiles
+  ge("tileLine").querySelectorAll(".tile").forEach(function(t){t.disabled=true;});
+  ge("tileBank").querySelectorAll(".tile").forEach(function(t){t.disabled=true;});
+  showFeedback(correct,row);show("nextBtn");
+}
+
+function finishSession(){
+  hide("playArea");show("doneArea");
+  var total=queue.length;ge("doneScore").textContent=okCount+" / "+total;
+  var pct=total?Math.round((okCount/total)*100):0;
+  ge("doneEmoji").innerHTML=pct>=80?"&#127881;":pct>=50?"&#128077;":"&#128170;";
+  ge("doneMsg").textContent=pct>=80?"Excellent work \u2014 you really know this!":pct>=50?"Good effort! Play again to improve.":"Keep practising \u2014 you'll get there!";
+}
+function playAgain(){
+  hide("doneArea");
+  if(currentMode==="beat"){openBeatSetup();}
+  else startMode(currentMode);
+}
+
+// ============ BEAT THE CLOCK ============
+var SUBJECTS=["I","You","He","She","It","We","They"];
+function openBeatSetup(){
+  hide("homeArea");hide("playArea");hide("doneArea");hide("beatPlay");show("beatSetup");
+  ge("sTitle").textContent="Beat the Clock";ge("sInstr").textContent="Make the correct form before the timer runs out!";
+  refreshDrillAvail();
+}
+function refreshDrillAvail(){
+  var hasV=byLevel(verbs).length>0, hasA=byLevel(adjectives).length>0;
+  ge("dVerb").style.opacity=hasV?"1":"0.4";
+  ge("dAdj").style.opacity=hasA?"1":"0.4";
+  ge("tenseSec").style.display=(btDrill==="adjectives")?"none":"block";
+}
+function setDrill(d){
+  if(d==="verbs"&&byLevel(verbs).length<1){alert("No verbs found at this level. Add a verbs tab or pick another level.");return;}
+  if(d==="adjectives"&&byLevel(adjectives).length<1){alert("No adjectives found at this level. Add an adjectives tab or pick another level.");return;}
+  if(d==="mixed"&&byLevel(verbs).length<1&&byLevel(adjectives).length<1){alert("Add verbs and/or adjectives first.");return;}
+  btDrill=d;
+  ge("dVerb").classList.toggle("on",d==="verbs");
+  ge("dAdj").classList.toggle("on",d==="adjectives");
+  ge("dMix").classList.toggle("on",d==="mixed");
+  ge("tenseSec").style.display=(d==="adjectives")?"none":"block";
+}
+function toggleTense(el){
+  el.classList.toggle("on");
+  btEnabledTenses=[].slice.call(ge("btTenseTogs").querySelectorAll(".tog.on")).map(function(t){return t.dataset.tense;});
+}
+function contractBe(be){return be==="am"?"'m":be==="is"?"'s":"'re";}
+function contractHave(have){return have==="has"?"'s":"'ve";}
+function buildVerbAnswers(subject,v,tense){
+  var s=subject.toLowerCase();
+  var third=(s==="he"||s==="she"||s==="it");
+  var bePres=third?"is":(s==="i"?"am":"are");
+  var bePast=(third||s==="i")?"was":"were";
+  var have=third?"has":"have";
+  var out=[];
+  function add(){for(var i=0;i<arguments.length;i++)out.push(arguments[i]);}
+  switch(tense){
+    case "present simple":add(subject+" "+(third?v.third_person:v.base),(third?v.third_person:v.base));break;
+    case "present continuous":add(subject+" "+bePres+" "+v.ing_form,subject+contractBe(bePres)+" "+v.ing_form);break;
+    case "past simple":add(subject+" "+v.past_simple,v.past_simple);break;
+    case "past continuous":add(subject+" "+bePast+" "+v.ing_form);break;
+    case "present perfect":add(subject+" "+have+" "+v.past_participle,subject+contractHave(have)+" "+v.past_participle);break;
+    case "future":add(subject+" will "+v.base,subject+"'ll "+v.base);break;
+  }
+  return out.filter(function(x){return x && x.indexOf("undefined")===-1;});
+}
+function ruleForTense(v,tense,ans){
+  var t={"present simple":"Present simple","present continuous":"Present continuous","past simple":"Past simple","past continuous":"Past continuous","present perfect":"Present perfect","future":"Future (will)"}[tense];
+  return t+" of '"+v.base+"' \u2192 "+ans;
+}
+function newBeatPrompt(){
+  var doVerb;
+  if(btDrill==="verbs")doVerb=true;
+  else if(btDrill==="adjectives")doVerb=false;
+  else doVerb=(byLevel(adjectives).length===0)?true:(byLevel(verbs).length===0)?false:(Math.random()<0.5);
+  if(doVerb){
+    var vs=byLevel(verbs);if(!vs.length){doVerb=false;}
+    else{
+      var v=vs[Math.floor(Math.random()*vs.length)];
+      var tenses=btEnabledTenses.length?btEnabledTenses:["present simple"];
+      var tense=tenses[Math.floor(Math.random()*tenses.length)];
+      var subj=SUBJECTS[Math.floor(Math.random()*SUBJECTS.length)];
+      var answers=buildVerbAnswers(subj,v,tense);
+      if(!answers.length){return newBeatPrompt();}
+      btCurrent={type:"verb",display:answers[0],accepted:answers.map(norm),rule:ruleForTense(v,tense,answers[0]),chips:[["Subject",subj],["Verb",v.base],["Tense",tense,true]]};
+      renderBeatPrompt();return;
+    }
+  }
+  // adjective
+  var as=byLevel(adjectives);if(!as.length){btCurrent=null;return;}
+  var pool=[];
+  as.forEach(function(a){if(a.comparative)pool.push({a:a,deg:"comparative",form:a.comparative});if(a.superlative)pool.push({a:a,deg:"superlative",form:a.superlative});});
+  if(!pool.length){btCurrent=null;return;}
+  var pick=pool[Math.floor(Math.random()*pool.length)];
+  var acc=[norm(pick.form)];if(pick.deg==="superlative")acc.push(norm("the "+pick.form));
+  btCurrent={type:"adj",display:pick.form,accepted:acc,rule:cap(pick.deg)+" of '"+pick.a.base+"' \u2192 "+pick.form,chips:[["Adjective",pick.a.base],[pick.deg==="comparative"?"Make":"Make","more / -er"===""?"":pick.deg,true]]};
+  btCurrent.chips=[["Adjective",pick.a.base],["Form",pick.deg,true]];
+  renderBeatPrompt();
+}
+function renderBeatPrompt(){
+  var html="";
+  btCurrent.chips.forEach(function(c){html+='<div class="bt-chip'+(c[2]?" tense":"")+'"><div class="lbl">'+esc(c[0])+'</div><div class="val">'+esc(c[1])+'</div></div>';});
+  ge("btChips").innerHTML=html;
+  var inp=ge("btInput");inp.value="";inp.className="type-input";inp.disabled=false;inp.focus();
+}
+function startBeat(){
+  currentMode="beat";
+  if(btDrill==="verbs"&&!btEnabledTenses.length){alert("Choose at least one tense.");return;}
+  hide("beatSetup");show("beatPlay");
+  btScore=0;btStreak=0;btBest=0;btTimeLeft=60;
+  ge("btScore").innerHTML="&#10003; 0";ge("btStreak").innerHTML="&#128293; 0";
+  ge("btTimer").textContent="60";ge("btTimer").classList.remove("urgent");ge("btFb").textContent="";
+  newBeatPrompt();
+  if(!btCurrent){ge("errMsg").textContent="No content available for this drill at this level.";show("errMsg");backHome();return;}
+  btTimer=setInterval(function(){
+    btTimeLeft--;ge("btTimer").textContent=btTimeLeft;
+    if(btTimeLeft<=10)ge("btTimer").classList.add("urgent");
+    if(btTimeLeft<=0){clearInterval(btTimer);btTimer=null;finishBeat();}
+  },1000);
+  var inp=ge("btInput");inp.onkeydown=function(e){if(e.key==="Enter")submitBeat();};
+}
+function submitBeat(){
+  if(!btCurrent||!btTimer)return;
+  var inp=ge("btInput");var val=norm(inp.value);if(!val)return;
+  var correct=btCurrent.accepted.indexOf(val)>-1;
+  var fb=ge("btFb");
+  if(correct){
+    btScore++;btStreak++;if(btStreak>btBest)btBest=btStreak;
+    ge("btScore").innerHTML="&#10003; "+btScore;ge("btStreak").innerHTML="&#128293; "+btStreak;
+    fb.className="bt-fb ok";fb.innerHTML="&#10003; "+esc(btCurrent.display);
+    inp.className="type-input correct";
+    setTimeout(function(){if(btTimer){fb.textContent="";newBeatPrompt();}},450);
+  }else{
+    btStreak=0;ge("btStreak").innerHTML="&#128293; 0";
+    fb.className="bt-fb no";fb.innerHTML="&#10007; "+esc(btCurrent.display)+" &middot; <span style='font-weight:600'>"+esc(btCurrent.rule)+"</span>";
+    inp.className="type-input wrong";inp.disabled=true;
+    setTimeout(function(){if(btTimer){fb.textContent="";newBeatPrompt();}},1500);
+  }
+}
+function finishBeat(){
+  hide("beatPlay");show("doneArea");
+  ge("doneScore").textContent=btScore+" correct";
+  ge("doneEmoji").innerHTML=btScore>=15?"&#127942;":btScore>=8?"&#128293;":"&#128170;";
+  ge("doneMsg").textContent="Best streak: "+btBest+". "+(btScore>=15?"Lightning fast!":btScore>=8?"Great pace \u2014 try to beat it!":"Keep going \u2014 speed comes with practice!");
+}
+
+// ============ INIT ============
+function loadAll(){
+  show("loadBox");hide("homeArea");hide("errMsg");
+  var jobs=[];
+  jobs.push(fetchSheet(urls.sentences).then(function(r){sentences=r.filter(function(x){return x.sentence&&x.answer;});}));
+  if(urls.verbs)jobs.push(fetchSheet(urls.verbs).then(function(r){verbs=r.filter(function(x){return x.base;});}).catch(function(){}));
+  if(urls.adjectives)jobs.push(fetchSheet(urls.adjectives).then(function(r){adjectives=r.filter(function(x){return x.base;});}).catch(function(){}));
+  if(urls.wordbanks)jobs.push(fetchSheet(urls.wordbanks).then(function(r){wordBanks=r.map(function(x){return {group:x.group,words:(x.words||"").split("|").map(function(s){return s.trim();}).filter(Boolean)};}).filter(function(x){return x.group&&x.words.length;});}).catch(function(){}));
+  Promise.all(jobs).then(function(){
+    hide("loadBox");
+    if(sentences.length<1){ge("errMsg").textContent="No sentences loaded. Check your sentences tab headers (sentence, answer) and that it's published as CSV.";show("errMsg");return;}
+    ge("bankCt").textContent=sentences.length;show("bankInfo");
+    show("homeArea");ge("sTitle").textContent="Grammar Practice";ge("sInstr").textContent="Choose your level and a game below.";
+    // pick a level that has content
+    var lv=["A1","A2","B1","B2","C1"];for(var i=0;i<lv.length;i++){if(sentences.some(function(s){return (s.cefr||"").toUpperCase()===lv[i];})){var el=ge("lv"+lv[i]);if(el)el.checked=true;break;}}
+    onLevelChange();
+  }).catch(function(e){hide("loadBox");ge("errMsg").textContent="Could not load: "+(e&&e.message?e.message:"error");show("errMsg");});
+}
+function init(){
+  var p=new URLSearchParams(window.location.search);
+  var isTeacher=p.get("teacher")&&p.get("teacher")===TEACHER_CODE;
+  urls.sentences=p.get("sentences")?decodeURIComponent(p.get("sentences")):"";
+  urls.verbs=p.get("verbs")?decodeURIComponent(p.get("verbs")):"";
+  urls.adjectives=p.get("adjectives")?decodeURIComponent(p.get("adjectives")):"";
+  urls.wordbanks=p.get("wordbanks")?decodeURIComponent(p.get("wordbanks")):"";
+  if(isTeacher){
+    show("teacherPanel");
+    if(urls.sentences)ge("uSent").value=urls.sentences;
+    if(urls.verbs)ge("uVerb").value=urls.verbs;
+    if(urls.adjectives)ge("uAdj").value=urls.adjectives;
+    if(urls.wordbanks)ge("uWb").value=urls.wordbanks;
+  }
+  if(urls.sentences){isStudentLink=!isTeacher;loadAll();}
+}
+init();
+</script>
+</body>
+</html>
