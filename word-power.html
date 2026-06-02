@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Power — Nunnas ESL</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#2d3561;--navy2:#3d4878;
+  --teal:#00cec9;--teal2:#00b5b0;--tealp:#e0fafa;
+  --purple:#a29bfe;--purplep:#eeeeff;--purpled:#6c5ce7;
+  --green:#00b894;--greenp:#e6faf5;--greend:#007a63;
+  --coral:#e17055;--coralp:#fff0ed;--corald:#a84f20;
+  --amber:#f9a825;--amberp:#fff8e6;
+  --red:#d63031;--redp:#fff0f0;
+  --text:#2d2d2d;--muted:#6b7280;
+  --border:#e5e7f0;--bg:#f5f6ff;--rad:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 50%,#4a5490 100%);padding:2.5rem 1.25rem 5rem;position:relative;overflow:hidden;text-align:center}
+.hc1{position:absolute;width:300px;height:300px;border-radius:50%;background:var(--teal);opacity:.12;filter:blur(60px);top:-80px;left:-60px}
+.hc2{position:absolute;width:250px;height:250px;border-radius:50%;background:var(--purple);opacity:.15;filter:blur(60px);bottom:-60px;right:-40px}
+.logo-badge{display:inline-block;background:white;border-radius:12px;padding:8px 20px;font-family:'Lora',serif;font-weight:700;color:var(--navy);font-size:1rem;margin-bottom:1rem;position:relative;z-index:2}
+.hero h1{font-family:'Lora',serif;font-size:2.4rem;font-weight:700;color:white;position:relative;z-index:2;line-height:1.2}
+.hero h1 em{color:var(--teal);font-style:italic}
+.hero p{color:rgba(255,255,255,.8);margin-top:.5rem;font-size:1rem;position:relative;z-index:2}
+.wrap{max-width:720px;margin:-2.5rem auto 0;padding:0 1.25rem 4rem;position:relative;z-index:10}
+.card{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,.10);padding:1.5rem;margin-bottom:1.25rem}
+.panel{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,.10);margin-bottom:1.25rem;overflow:hidden}
+.phdr{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;user-select:none}
+.phdr h2{font-size:1rem;font-weight:800;color:var(--navy)}
+.ti{font-size:1.2rem;color:var(--muted);transition:transform .2s;display:inline-block}
+.pbody{display:none;padding:1.25rem 1.5rem;border-top:2px solid var(--border)}
+.open>.ti{transform:rotate(180deg)}
+.pbody.open{display:block}
+.lvl-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.lvl{padding:6px 16px;border-radius:30px;font-weight:800;font-size:.8rem;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.lvl-A1{background:var(--greenp);color:var(--greend);border-color:var(--green)}
+.lvl-A2{background:#e8f4fd;color:#065a9e;border-color:#0984e3}
+.lvl-B1{background:var(--purplep);color:var(--purpled);border-color:var(--purpled)}
+.lvl-B2{background:var(--coralp);color:var(--corald);border-color:var(--coral)}
+.lvl-C1{background:var(--redp);color:var(--red);border-color:var(--red)}
+.lvl.sel{box-shadow:0 0 0 3px rgba(0,0,0,.18)}
+.mode-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.mpill{padding:8px 16px;border-radius:30px;font-weight:700;font-size:.82rem;cursor:pointer;border:2px solid var(--border);background:white;color:var(--muted);transition:all .15s;font-family:'Nunito',sans-serif}
+.mpill.sel{background:var(--navy);color:white;border-color:var(--navy)}
+.btn{display:inline-block;padding:12px 28px;border-radius:30px;font-weight:800;font-size:.95rem;cursor:pointer;border:none;transition:all .15s;font-family:'Nunito',sans-serif}
+.btn-nv{background:var(--navy);color:white}.btn-nv:hover{background:var(--navy2)}
+.btn-tl{background:var(--teal);color:white}.btn-tl:hover{background:var(--teal2)}
+.btn-ol{background:white;color:var(--navy);border:2px solid var(--navy)}.btn-ol:hover{background:var(--bg)}
+.btn-sm{padding:8px 18px;font-size:.82rem}
+.btn-fw{width:100%;display:block;text-align:center}
+.pb-wrap{background:#e5e7f0;border-radius:30px;height:10px;margin-bottom:1rem;overflow:hidden}
+.pb-fill{background:linear-gradient(90deg,var(--teal),var(--purple));height:100%;border-radius:30px;transition:width .4s;width:0}
+.q-box{background:linear-gradient(135deg,var(--purplep),var(--tealp));border-radius:var(--rad);border:2px solid var(--purple);padding:1.5rem;margin-bottom:1.25rem;text-align:center}
+.q-badge{display:inline-block;background:var(--navy);color:white;font-size:.72rem;font-weight:800;padding:3px 12px;border-radius:20px;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em}
+.q-pt{font-size:.8rem;font-weight:700;color:var(--purpled);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
+.q-word{font-family:'Lora',serif;font-size:1.4rem;font-weight:700;color:var(--navy);line-height:1.4}
+.q-sub{font-size:.9rem;color:var(--muted);margin-top:.5rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
+.opt{background:white;border:2px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;text-align:left;display:flex;align-items:center;gap:10px;transition:all .15s;color:var(--text)}
+.opt:hover{border-color:var(--purpled);background:var(--purplep)}
+.opt-l{width:28px;height:28px;border-radius:50%;background:var(--bg);font-weight:900;font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy)}
+.opt.ok{border-color:var(--green);background:var(--greenp);color:var(--greend)}
+.opt.ok .opt-l{background:var(--green);color:white}
+.opt.no{border-color:var(--coral);background:var(--coralp);color:var(--corald)}
+.opt.no .opt-l{background:var(--coral);color:white}
+.opt:disabled{cursor:default;pointer-events:none}
+.conn-row{display:flex;gap:1rem;justify-content:center;margin-bottom:1.25rem}
+.conn-btn{flex:1;padding:16px;border-radius:var(--rad);font-size:1.1rem;font-weight:900;cursor:pointer;border:3px solid transparent;transition:all .2s;font-family:'Nunito',sans-serif}
+.cpos{background:var(--greenp);color:var(--greend);border-color:var(--green)}
+.cneg{background:var(--coralp);color:var(--corald);border-color:var(--coral)}
+.cneu{background:var(--amberp);color:#7a5800;border-color:var(--amber)}
+.conn-btn:hover{transform:translateY(-2px)}
+.fb{border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;font-weight:700;font-size:.95rem;display:none}
+.fb-ok{border:2px solid var(--green);background:var(--greenp);color:var(--greend)}
+.fb-no{border:2px solid var(--coral);background:var(--coralp);color:var(--corald)}
+.sc-row{display:flex;gap:.75rem;align-items:center}
+.okct{padding:5px 14px;border-radius:20px;font-weight:800;font-size:.9rem;background:var(--greenp);color:var(--greend)}
+.noct{padding:5px 14px;border-radius:20px;font-weight:800;font-size:.9rem;background:var(--coralp);color:var(--corald)}
+.done-wrap{text-align:center;padding:2rem 1rem}
+.done-emoji{font-size:4rem;margin-bottom:1rem}
+.done-score{font-size:3rem;font-weight:900;color:var(--navy);font-family:'Lora',serif}
+.done-msg{color:var(--muted);margin:.5rem 0 1.5rem}
+.fam-grid{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem;justify-content:center}
+.fp{padding:8px 18px;border-radius:30px;font-weight:700;font-size:.9rem;border:2px solid var(--border);background:white;cursor:pointer;transition:all .15s;color:var(--text);font-family:'Nunito',sans-serif}
+.fp:hover{border-color:var(--purpled);background:var(--purplep)}
+.fp.ok{border-color:var(--green);background:var(--greenp);color:var(--greend)}
+.fp.no{border-color:var(--coral);background:var(--coralp);color:var(--corald)}
+.fp.sel{border-color:var(--purpled);background:var(--purplep);color:var(--purpled)}
+/* TEACHER PANEL */
+.sbox{background:#1e2340;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.sbox-lbl{color:var(--teal);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+.sbox input[type=text]{width:100%;padding:10px 14px;border-radius:8px;border:2px solid #3d4878;background:#2d3561;color:white;font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;margin-bottom:.5rem}
+.sbox input[type=text]:focus{border-color:var(--teal)}
+.sbox input[type=text]::placeholder{color:rgba(255,255,255,.4)}
+.url-row{display:flex;gap:.5rem}
+.url-row input{flex:1;margin-bottom:0}
+.tbtn{padding:10px 16px;border-radius:8px;border:none;background:var(--teal);color:#1e2340;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:.85rem}
+.sstat{font-size:.82rem;margin-top:.5rem;color:rgba(255,255,255,.6)}
+.sstat.ok{color:var(--teal)}.sstat.err{color:var(--coral)}
+.gen-area{width:100%;padding:10px;border-radius:8px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:.8rem;resize:none;margin-top:.5rem}
+.htabs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem}
+.htab{padding:5px 12px;border-radius:20px;font-size:.78rem;font-weight:700;border:2px solid var(--border);background:white;cursor:pointer;color:var(--muted);font-family:'Nunito',sans-serif}
+.htab.sel{background:var(--navy);color:white;border-color:var(--navy)}
+.how{background:var(--bg);border-radius:12px;padding:1.25rem;margin-top:.75rem}
+.how h3{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:.75rem}
+.step{display:flex;gap:.75rem;margin-bottom:.6rem;align-items:flex-start}
+.sn{width:24px;height:24px;border-radius:50%;background:var(--navy);color:white;font-weight:900;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:.83rem;color:var(--text);line-height:1.5}
+code{background:var(--border);padding:1px 6px;border-radius:4px;font-size:.78rem}
+.hidden{display:none!important}
+@media(max-width:480px){
+  .hero h1{font-size:1.8rem}
+  .opts{grid-template-columns:1fr}
+  .conn-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hc1"></div><div class="hc2"></div>
+  <div class="logo-badge">🇬🇧 Nunnas ESL</div>
+  <h1>Word <em>Power</em></h1>
+  <p>Synonyms · Antonyms · Word Families · Prefixes · Suffixes · Register · Connotation</p>
+</div>
+
+<div class="wrap">
+
+<!-- ── TEACHER PANEL ─────────────────────────────────────── -->
+<div class="panel" id="tPanel" style="display:none">
+  <div class="phdr" id="tPhdr" onclick="togPanel()">
+    <h2>⚙️ Teacher Setup</h2><span class="ti" id="tTi">▾</span>
+  </div>
+  <div class="pbody" id="tBody">
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Paste your Google Sheets CSV URLs below — one per game mode. Leave blank to skip that mode.</p>
+
+    <div class="htabs">
+      <div class="htab sel" onclick="showTab(this,'syn')">Synonyms</div>
+      <div class="htab" onclick="showTab(this,'ant')">Antonyms</div>
+      <div class="htab" onclick="showTab(this,'fam')">Word Families</div>
+      <div class="htab" onclick="showTab(this,'pre')">Prefixes</div>
+      <div class="htab" onclick="showTab(this,'suf')">Suffixes</div>
+      <div class="htab" onclick="showTab(this,'reg')">Register</div>
+      <div class="htab" onclick="showTab(this,'con')">Connotation</div>
+      <div class="htab" onclick="showTab(this,'odd')">Odd One Out</div>
+    </div>
+
+    <div id="ts-syn">
+      <div class="sbox">
+        <div class="sbox-lbl">Synonyms CSV URL</div>
+        <div class="url-row"><input type="text" id="u-syn" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('syn')">Test</button></div>
+        <div class="sstat" id="st-syn"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Example: <code>happy, A2, delighted, angry, slow, hungry</code></div></div>
+        <div class="step"><div class="sn">3</div><div class="st">File → Share → Publish to web → CSV → Copy URL</div></div>
+      </div>
+    </div>
+    <div id="ts-ant" class="hidden">
+      <div class="sbox">
+        <div class="sbox-lbl">Antonyms CSV URL</div>
+        <div class="url-row"><input type="text" id="u-ant" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('ant')">Test</button></div>
+        <div class="sstat" id="st-ant"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Example: <code>ancient, B1, modern, old, historic, traditional</code></div></div>
+      </div>
+    </div>
+    <div id="ts-fam" class="hidden">
+      <div class="sbox">
+        <div class="sbox-lbl">Word Families CSV URL</div>
+        <div class="url-row"><input type="text" id="u-fam" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('fam')">Test</button></div>
+        <div class="sstat" id="st-fam"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>root, cefr, noun, verb, adjective, adverb</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Example: <code>create, B1, creation, create, creative, creatively</code></div></div>
+      </div>
+    </div>
+    <div id="ts-pre" class="hidden">
+      <div class="sbox">
+        <div class="sbox-lbl">Prefixes CSV URL</div>
+        <div class="url-row"><input type="text" id="u-pre" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('pre')">Test</button></div>
+        <div class="sstat" id="st-pre"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>base, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Example: <code>happy, A2, unhappy, rehappy, dishappy, overhappy</code></div></div>
+      </div>
+    </div>
+    <div id="ts-suf" class="hidden">
+      <div class="sbox">
+        <div class="sbox-lbl">Suffixes CSV URL</div>
+        <div class="url-row"><input type="text" id="u-suf" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('suf')">Test</button></div>
+        <div class="sstat" id="st-suf"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>base, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Example: <code>teach, A2, teacher, teachful, teachness, teachly</code></div></div>
+      </div>
+    </div>
+    <div id="ts-reg" class="hidden">
+      <div class="sbox">
+        <div class="sbox-lbl">Register CSV URL</div>
+        <div class="url-row"><input type="text" id="u-reg" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('reg')">Test</button></div>
+        <div class="sstat" id="st-reg"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, register, wrong1, wrong2, wrong3</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st"><code>register</code> = <code>formal</code> or <code>informal</code> or <code>neutral</code></div></div>
+      </div>
+    </div>
+    <div id="ts-con" class="hidden">
+      <div class="sbox">
+        <div class="sbox-lbl">Connotation CSV URL</div>
+        <div class="url-row"><input type="text" id="u-con" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('con')">Test</button></div>
+        <div class="sstat" id="st-con"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, connotation</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st"><code>connotation</code> = <code>positive</code>, <code>negative</code>, or <code>neutral</code></div></div>
+      </div>
+    </div>
+    <div id="ts-odd" class="hidden">
+      <div class="sbox">
+        <div class="sbox-lbl">Odd One Out CSV URL</div>
+        <div class="url-row"><input type="text" id="u-odd" placeholder="Paste published CSV URL…"><button class="tbtn" onclick="testSheet('odd')">Test</button></div>
+        <div class="sstat" id="st-odd"></div>
+      </div>
+      <div class="how"><h3>📋 Column format</h3>
+        <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word1, word2, word3, odd, cefr, reason</code></div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Example: <code>dog, cat, horse, table, A1, table is not an animal</code></div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.25rem">
+      <p style="font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:.5rem">🔗 Generate Student Link</p>
+      <button class="btn btn-tl btn-sm" onclick="genLink()">Generate Link</button>
+      <textarea class="gen-area" id="genOut" rows="3" readonly placeholder="Your student link will appear here…"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ── LOAD ──────────────────────────────────────────────── -->
+<div class="card hidden" id="loadBox" style="text-align:center">
+  <p style="font-size:2rem">⏳</p>
+  <p style="color:var(--muted);margin-top:.5rem">Loading content…</p>
+</div>
+
+<!-- ── START SCREEN ─────────────────────────────────────── -->
+<div id="startScreen">
+  <div class="card">
+    <p style="font-size:.85rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.6rem">Choose Level</p>
+    <div class="lvl-row">
+      <div class="lvl lvl-A1 sel" onclick="pickLvl(this,'A1')">A1</div>
+      <div class="lvl lvl-A2" onclick="pickLvl(this,'A2')">A2</div>
+      <div class="lvl lvl-B1" onclick="pickLvl(this,'B1')">B1</div>
+      <div class="lvl lvl-B2" onclick="pickLvl(this,'B2')">B2</div>
+      <div class="lvl lvl-C1" onclick="pickLvl(this,'C1')">C1</div>
+    </div>
+    <p style="font-size:.85rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.6rem">Choose Game Mode</p>
+    <div class="mode-row">
+      <div class="mpill sel" onclick="pickMode(this,'battle')">⚡ Word Power Battle</div>
+      <div class="mpill" onclick="pickMode(this,'syn')">🔵 Synonym Sprint</div>
+      <div class="mpill" onclick="pickMode(this,'ant')">🔴 Antonym Attack</div>
+      <div class="mpill" onclick="pickMode(this,'fam')">🌿 Word Family Race</div>
+      <div class="mpill" onclick="pickMode(this,'pre')">➕ Prefix Builder</div>
+      <div class="mpill" onclick="pickMode(this,'suf')">🔧 Suffix Builder</div>
+      <div class="mpill" onclick="pickMode(this,'odd')">🔎 Odd One Out</div>
+      <div class="mpill" onclick="pickMode(this,'reg')">🎩 Formal or Informal</div>
+      <div class="mpill" onclick="pickMode(this,'con')">💚 Connotation</div>
+    </div>
+    <button class="btn btn-nv btn-fw" onclick="startGame()">Start Playing →</button>
+  </div>
+  <div class="card" id="demoNote" style="border-color:var(--amber);background:var(--amberp)">
+    <p style="font-size:.85rem;color:#7a5800;font-weight:700">⚠️ Running on built-in demo content. Add your Google Sheets URLs via the Teacher panel to load your own content.</p>
+  </div>
+</div>
+
+<!-- ── GAME SCREEN ──────────────────────────────────────── -->
+<div id="gameScreen" class="hidden">
+  <div class="card" style="padding:1rem 1.5rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+      <div class="sc-row"><span class="okct" id="scOk">✓ 0</span><span class="noct" id="scNo">✗ 0</span></div>
+      <span style="font-size:.82rem;color:var(--muted);font-weight:700" id="qCtr">Q 1 / 10</span>
+    </div>
+    <div class="pb-wrap"><div class="pb-fill" id="pbFill"></div></div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-badge" id="qBadge">Synonym Sprint</div>
+    <div class="q-pt" id="qPt">Question 1 of 10</div>
+    <div class="q-word" id="qWord">happy</div>
+    <div class="q-sub" id="qSub">Choose the closest synonym</div>
+  </div>
+
+  <div class="opts" id="optsBox"></div>
+
+  <div id="famBox" class="hidden">
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:.75rem;font-weight:600">Select all members of this word family, then press Check:</p>
+    <div class="fam-grid" id="famPills"></div>
+    <div style="text-align:center;margin-top:.75rem">
+      <button class="btn btn-nv btn-sm" onclick="checkFam()">Check Answers ✓</button>
+    </div>
+  </div>
+
+  <div id="connBox" class="hidden">
+    <div class="conn-row">
+      <button class="conn-btn cpos" onclick="checkConn('positive')">💚 Positive</button>
+      <button class="conn-btn cneg" onclick="checkConn('negative')">🔴 Negative</button>
+      <button class="conn-btn cneu" onclick="checkConn('neutral')">⚪ Neutral</button>
+    </div>
+  </div>
+
+  <div class="fb fb-ok" id="fbOk">✅ Correct! Well done.</div>
+  <div class="fb fb-no" id="fbNo">❌ Not quite. The answer was: <strong id="fbAns"></strong></div>
+
+  <div style="text-align:center;margin-top:.5rem">
+    <button class="btn btn-nv hidden" id="nextBtn" onclick="nextQ()">Next Question →</button>
+  </div>
+</div>
+
+<!-- ── DONE SCREEN ──────────────────────────────────────── -->
+<div id="doneScreen" class="hidden">
+  <div class="card">
+    <div class="done-wrap">
+      <div class="done-emoji" id="doneEmoji">🎉</div>
+      <div class="done-score" id="doneScore">8 / 10</div>
+      <div class="done-msg" id="doneMsg">Excellent work!</div>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-nv" onclick="startGame()">🔄 Play Again</button>
+        <button class="btn btn-ol" onclick="goHome()">🏠 Change Mode</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── HELPERS ──────────────────────────────────────────────
+function ge(id){return document.getElementById(id)}
+function show(id){ge(id).classList.remove('hidden')}
+function hide(id){ge(id).classList.add('hidden')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+// ── URL PARAMS ───────────────────────────────────────────
+var P=new URLSearchParams(window.location.search);
+var isTeacher=(P.get('teacher')==='NUNNAS2025');
+var keys=['syn','ant','fam','pre','suf','reg','con','odd'];
+var urls={};
+keys.forEach(function(k){urls[k]=P.get(k)?decodeURIComponent(P.get(k)):''});
+
+// ── STATE ────────────────────────────────────────────────
+var S={level:'A1',mode:'battle',qs:[],cur:0,ok:0,no:0,answered:false};
+var DB={syn:[],ant:[],fam:[],pre:[],suf:[],reg:[],con:[],odd:[]};
+
+// ── DEMO DATA ────────────────────────────────────────────
+var DEMO={
+  syn:[
+    {word:'happy',cefr:'A1',correct:'delighted',wrong1:'angry',wrong2:'slow',wrong3:'hungry'},
+    {word:'big',cefr:'A1',correct:'large',wrong1:'tiny',wrong2:'soft',wrong3:'dark'},
+    {word:'tired',cefr:'A2',correct:'exhausted',wrong1:'awake',wrong2:'cheerful',wrong3:'proud'},
+    {word:'angry',cefr:'A2',correct:'furious',wrong1:'calm',wrong2:'joyful',wrong3:'bored'},
+    {word:'smart',cefr:'B1',correct:'intelligent',wrong1:'foolish',wrong2:'lazy',wrong3:'clumsy'},
+    {word:'enormous',cefr:'B1',correct:'huge',wrong1:'tiny',wrong2:'weak',wrong3:'slow'},
+    {word:'difficult',cefr:'B2',correct:'challenging',wrong1:'simple',wrong2:'easy',wrong3:'plain'},
+    {word:'obtain',cefr:'B2',correct:'acquire',wrong1:'lose',wrong2:'forget',wrong3:'ignore'},
+    {word:'elucidate',cefr:'C1',correct:'clarify',wrong1:'confuse',wrong2:'obscure',wrong3:'ignore'},
+    {word:'meticulous',cefr:'C1',correct:'thorough',wrong1:'careless',wrong2:'hasty',wrong3:'vague'}
+  ],
+  ant:[
+    {word:'ancient',cefr:'B1',correct:'modern',wrong1:'old',wrong2:'historic',wrong3:'traditional'},
+    {word:'brave',cefr:'A2',correct:'cowardly',wrong1:'bold',wrong2:'daring',wrong3:'fearless'},
+    {word:'generous',cefr:'B1',correct:'selfish',wrong1:'kind',wrong2:'giving',wrong3:'helpful'},
+    {word:'noisy',cefr:'A1',correct:'quiet',wrong1:'loud',wrong2:'busy',wrong3:'angry'},
+    {word:'complex',cefr:'B2',correct:'simple',wrong1:'hard',wrong2:'detailed',wrong3:'tricky'},
+    {word:'optimistic',cefr:'B2',correct:'pessimistic',wrong1:'hopeful',wrong2:'cheerful',wrong3:'positive'},
+    {word:'gradual',cefr:'C1',correct:'sudden',wrong1:'slow',wrong2:'steady',wrong3:'constant'},
+    {word:'trivial',cefr:'C1',correct:'significant',wrong1:'minor',wrong2:'small',wrong3:'unimportant'}
+  ],
+  fam:[
+    {root:'create',cefr:'B1',noun:'creation',verb:'create',adjective:'creative',adverb:'creatively'},
+    {root:'educate',cefr:'B1',noun:'education',verb:'educate',adjective:'educational',adverb:'educationally'},
+    {root:'communicate',cefr:'B2',noun:'communication',verb:'communicate',adjective:'communicative',adverb:'communicatively'},
+    {root:'develop',cefr:'B1',noun:'development',verb:'develop',adjective:'developmental',adverb:'developmentally'},
+    {root:'analyse',cefr:'C1',noun:'analysis',verb:'analyse',adjective:'analytical',adverb:'analytically'}
+  ],
+  pre:[
+    {base:'happy',cefr:'A2',correct:'unhappy',wrong1:'rehappy',wrong2:'mishappy',wrong3:'overhappy'},
+    {base:'possible',cefr:'A2',correct:'impossible',wrong1:'unpossible',wrong2:'mispossible',wrong3:'prepossible'},
+    {base:'honest',cefr:'B1',correct:'dishonest',wrong1:'unhonest',wrong2:'rehonest',wrong3:'mishonest'},
+    {base:'understand',cefr:'B1',correct:'misunderstand',wrong1:'disunderstand',wrong2:'reunderstand',wrong3:'preunderstand'},
+    {base:'behave',cefr:'B2',correct:'misbehave',wrong1:'disbehave',wrong2:'unbehave',wrong3:'prebehave'},
+    {base:'operate',cefr:'C1',correct:'cooperate',wrong1:'preoperate',wrong2:'misoperate',wrong3:'disoperate'}
+  ],
+  suf:[
+    {base:'teach',cefr:'A1',correct:'teacher',wrong1:'teachful',wrong2:'teaches',wrong3:'teachness'},
+    {base:'care',cefr:'A2',correct:'careful',wrong1:'careness',wrong2:'carely',wrong3:'caring'},
+    {base:'develop',cefr:'B1',correct:'development',wrong1:'developer',wrong2:'developed',wrong3:'developness'},
+    {base:'beauty',cefr:'B1',correct:'beautiful',wrong1:'beautiness',wrong2:'beautier',wrong3:'beautisome'},
+    {base:'manage',cefr:'B2',correct:'management',wrong1:'manageful',wrong2:'manageous',wrong3:'managely'},
+    {base:'create',cefr:'C1',correct:'creativity',wrong1:'createness',wrong2:'createful',wrong3:'createment'}
+  ],
+  reg:[
+    {word:'get',cefr:'A1',register:'informal',wrong1:'formal',wrong2:'neutral',wrong3:'academic'},
+    {word:'obtain',cefr:'B1',register:'formal',wrong1:'informal',wrong2:'slang',wrong3:'neutral'},
+    {word:'kids',cefr:'A1',register:'informal',wrong1:'formal',wrong2:'academic',wrong3:'neutral'},
+    {word:'commence',cefr:'B2',register:'formal',wrong1:'informal',wrong2:'casual',wrong3:'slang'},
+    {word:'chat',cefr:'A2',register:'informal',wrong1:'formal',wrong2:'academic',wrong3:'official'},
+    {word:'facilitate',cefr:'C1',register:'formal',wrong1:'informal',wrong2:'casual',wrong3:'slang'}
+  ],
+  con:[
+    {word:'determined',cefr:'B1',connotation:'positive'},
+    {word:'stubborn',cefr:'B1',connotation:'negative'},
+    {word:'slim',cefr:'A2',connotation:'positive'},
+    {word:'skinny',cefr:'A2',connotation:'negative'},
+    {word:'thrifty',cefr:'B2',connotation:'positive'},
+    {word:'cheap',cefr:'A2',connotation:'negative'},
+    {word:'ambitious',cefr:'B2',connotation:'positive'},
+    {word:'pushy',cefr:'B2',connotation:'negative'},
+    {word:'unique',cefr:'A2',connotation:'positive'},
+    {word:'weird',cefr:'A2',connotation:'negative'}
+  ],
+  odd:[
+    {word1:'dog',word2:'cat',word3:'horse',odd:'table',cefr:'A1',reason:'A table is not an animal'},
+    {word1:'happy',word2:'joyful',word3:'cheerful',odd:'angry',cefr:'A2',reason:'Angry is not a positive feeling'},
+    {word1:'run',word2:'walk',word3:'jump',odd:'sleep',cefr:'A1',reason:'Sleep is not a movement verb'},
+    {word1:'huge',word2:'enormous',word3:'vast',odd:'tiny',cefr:'B1',reason:'Tiny means small, not large'},
+    {word1:'doctor',word2:'nurse',word3:'surgeon',odd:'lawyer',cefr:'B1',reason:'A lawyer is not a healthcare professional'},
+    {word1:'analyse',word2:'examine',word3:'investigate',odd:'ignore',cefr:'B2',reason:'Ignore means to pay no attention'}
+  ]
+};
+
+// ── TEACHER PANEL TOGGLE ──────────────────────────────────
+function togPanel(){
+  var b=ge('tBody'); var t=ge('tTi');
+  if(b.classList.contains('open')){b.classList.remove('open');t.style.transform='';}
+  else{b.classList.add('open');t.style.transform='rotate(180deg)';}
+}
+
+// ── SHEET TABS ────────────────────────────────────────────
+function showTab(el,key){
+  document.querySelectorAll('.htab').forEach(function(t){t.classList.remove('sel')});
+  el.classList.add('sel');
+  keys.forEach(function(k){
+    var d=ge('ts-'+k);
+    if(d){k===key?d.classList.remove('hidden'):d.classList.add('hidden')}
+  });
+}
+
+// ── CSV FETCH ────────────────────────────────────────────
+function parseCSV(csv){
+  var lines=csv.trim().split('\n');
+  var hdrs=lines[0].split(',').map(function(h){return h.trim().toLowerCase().replace(/\r/g,'')});
+  return lines.slice(1).map(function(line){
+    var cols=line.split(',');var o={};
+    hdrs.forEach(function(h,i){o[h]=(cols[i]||'').trim().replace(/\r/g,'')});
+    return o;
+  }).filter(function(r){return Object.values(r).some(function(v){return v})});
+}
+
+function testSheet(key){
+  var url=ge('u-'+key).value.trim();
+  var st=ge('st-'+key);
+  if(!url){st.textContent='Please enter a URL first.';st.className='sstat err';return}
+  st.textContent='Testing…';st.className='sstat';
+  fetch(url).then(function(r){return r.text()}).then(function(csv){
+    var rows=parseCSV(csv);
+    DB[key]=rows;
+    st.textContent='✅ Connected — '+rows.length+' rows loaded.';
+    st.className='sstat ok';
+  }).catch(function(){
+    st.textContent='❌ Could not load. Check the URL and make sure the sheet is published as CSV.';
+    st.className='sstat err';
+  });
+}
+
+function genLink(){
+  var base=window.location.href.split('?')[0];
+  var p=new URLSearchParams();
+  keys.forEach(function(k){
+    var el=ge('u-'+k);
+    if(el&&el.value.trim())p.set(k,encodeURIComponent(el.value.trim()));
+  });
+  ge('genOut').value=base+'?'+p.toString();
+}
+
+// ── INIT ─────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',function(){
+  // Show teacher panel if teacher param present
+  if(isTeacher){
+    ge('tPanel').style.display='block';
+    ge('demoNote').style.display='none';
+    keys.forEach(function(k){
+      var el=ge('u-'+k);
+      if(el&&urls[k])el.value=urls[k];
+    });
+  }
+  // Load sheets if URLs provided
+  var hasUrls=keys.some(function(k){return urls[k]});
+  if(hasUrls){
+    ge('demoNote').style.display='none';
+    ge('loadBox').classList.remove('hidden');
+    var promises=keys.map(function(k){
+      if(!urls[k])return Promise.resolve();
+      return fetch(urls[k]).then(function(r){return r.text()}).then(function(csv){
+        DB[k]=parseCSV(csv);
+      }).catch(function(){DB[k]=DEMO[k]||[]});
+    });
+    Promise.all(promises).then(function(){ge('loadBox').classList.add('hidden')});
+  } else {
+    keys.forEach(function(k){DB[k]=DEMO[k]||[]});
+  }
+});
+
+// ── PICKERS ──────────────────────────────────────────────
+function pickLvl(el,lvl){
+  document.querySelectorAll('.lvl').forEach(function(l){l.classList.remove('sel')});
+  el.classList.add('sel');S.level=lvl;
+}
+function pickMode(el,mode){
+  document.querySelectorAll('.mpill').forEach(function(m){m.classList.remove('sel')});
+  el.classList.add('sel');S.mode=mode;
+}
+
+// ── LABELS ───────────────────────────────────────────────
+var LABELS={syn:'Synonym Sprint',ant:'Antonym Attack',fam:'Word Family Race',pre:'Prefix Builder',suf:'Suffix Builder',odd:'Odd One Out',reg:'Formal or Informal',con:'Connotation',battle:'Word Power Battle'};
+var SUBS={syn:'Choose the closest synonym',ant:'Choose the opposite',fam:'Select all members of this word family',pre:'Choose the correct prefix form',suf:'Choose the correct suffix form',odd:'Which word does NOT belong?',reg:'Is this word formal or informal?',con:'Is the connotation positive, negative, or neutral?',battle:'Mixed vocabulary challenge'};
+
+// ── POOL ─────────────────────────────────────────────────
+function pool(mode){
+  var p=(DB[mode]||[]).filter(function(r){return(r.cefr||'').toUpperCase()===S.level});
+  return p.length>=2?p:DB[mode]||[];
+}
+
+// ── BUILD QUESTION ────────────────────────────────────────
+function buildQ(mode,item){
+  if(mode==='fam')return{mode:'fam',word:item.root.toUpperCase(),sub:SUBS.fam,item:item};
+  if(mode==='con')return{mode:'con',word:item.word,sub:SUBS.con,correct:item.connotation,item:item};
+  if(mode==='odd'){
+    var ws=[item.word1,item.word2,item.word3,item.odd];
+    return{mode:'odd',word:'Which word does NOT belong?',sub:ws.slice(0,3).join(' · ')+' · '+item.odd,correct:item.odd,opts:shuf(ws),reason:item.reason};
+  }
+  var ans=item.correct||item.register;
+  var opts=shuf([ans,item.wrong1,item.wrong2,item.wrong3].filter(Boolean));
+  var w=(mode==='pre'||mode==='suf')?item.base:item.word;
+  return{mode:mode,word:w,sub:SUBS[mode],correct:ans,opts:opts};
+}
+
+function shuf(a){
+  var b=a.slice();
+  for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t}
+  return b;
+}
+
+function rnd(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
+function buildBattle(){
+  var modes=['syn','ant','pre','suf','odd','reg','con'];
+  var qs=[];
+  modes.forEach(function(m){
+    var p=pool(m);if(p.length)qs.push(buildQ(m,rnd(p)));
+  });
+  var fp=pool('fam');if(fp.length)qs.push(buildQ('fam',rnd(fp)));
+  return shuf(qs).slice(0,10);
+}
+
+function buildSingle(mode){
+  var p=pool(mode);if(!p.length)p=DEMO[mode]||[];
+  return shuf(p).slice(0,10).map(function(item){return buildQ(mode,item)});
+}
+
+// ── GAME START ────────────────────────────────────────────
+function startGame(){
+  S.ok=0;S.no=0;S.cur=0;S.answered=false;
+  S.qs=S.mode==='battle'?buildBattle():buildSingle(S.mode);
+  if(!S.qs.length){alert('No content found. Please try another level or mode.');return}
+  hide('startScreen');hide('doneScreen');show('gameScreen');
+  renderQ();
+}
+
+// ── RENDER ────────────────────────────────────────────────
+function renderQ(){
+  var q=S.qs[S.cur];var tot=S.qs.length;
+  S.answered=false;
+  ge('qCtr').textContent='Q '+(S.cur+1)+' / '+tot;
+  ge('scOk').textContent='✓ '+S.ok;
+  ge('scNo').textContent='✗ '+S.no;
+  ge('pbFill').style.width=(S.cur/tot*100)+'%';
+  ge('qPt').textContent='Question '+(S.cur+1)+' of '+tot;
+  ge('qBadge').textContent=LABELS[q.mode]||q.mode;
+  ge('qWord').textContent=q.word;
+  ge('qSub').textContent=q.sub;
+  ge('fbOk').style.display='none';
+  ge('fbNo').style.display='none';
+  hide('nextBtn');
+  hide('famBox');hide('connBox');
+  ge('optsBox').classList.remove('hidden');
+
+  if(q.mode==='fam'){
+    ge('optsBox').classList.add('hidden');show('famBox');renderFam(q);
+  } else if(q.mode==='con'){
+    ge('optsBox').classList.add('hidden');show('connBox');
+    document.querySelectorAll('.conn-btn').forEach(function(b){b.disabled=false;b.style.opacity='1'});
+  } else {
+    renderMC(q);
+  }
+}
+
+function renderMC(q){
+  var labs=['A','B','C','D'];
+  ge('optsBox').innerHTML=(q.opts||[]).map(function(o,i){
+    return '<button class="opt" onclick="checkMC(this,\''+esc(o)+'\')"><span class="opt-l">'+labs[i]+'</span> '+esc(o)+'</button>';
+  }).join('');
+}
+
+function renderFam(q){
+  var item=q.item;
+  var correct=[item.noun,item.verb,item.adjective,item.adverb].filter(function(w){return w&&w!=='—'});
+  var wrong=['innovation','management','historic','beautifully','creates','doing','running','happily'].filter(function(w){return correct.indexOf(w)<0});
+  var all=shuf(correct.concat(wrong.slice(0,3)));
+  ge('famPills').innerHTML=all.map(function(w){
+    return '<button class="fp" onclick="toggleFam(this)" data-word="'+esc(w)+'">'+esc(w)+'</button>';
+  }).join('');
+  ge('famBox').dataset.correct=JSON.stringify(correct);
+}
+
+function toggleFam(el){
+  if(S.answered)return;
+  el.classList.toggle('sel');
+}
+
+// ── ANSWER CHECKS ────────────────────────────────────────
+function checkMC(btn,chosen){
+  if(S.answered)return;S.answered=true;
+  var q=S.qs[S.cur];
+  var correct=(q.correct||'').toLowerCase().trim();
+  document.querySelectorAll('.opt').forEach(function(b){b.disabled=true});
+  if(chosen.toLowerCase().trim()===correct){
+    btn.classList.add('ok');feedback(true,correct);
+  } else {
+    btn.classList.add('no');
+    document.querySelectorAll('.opt').forEach(function(b){
+      if(b.textContent.toLowerCase().indexOf(correct)>=0)b.classList.add('ok');
+    });
+    feedback(false,correct);
+  }
+  show('nextBtn');
+}
+
+function checkConn(chosen){
+  if(S.answered)return;S.answered=true;
+  var correct=(S.qs[S.cur].correct||'').toLowerCase().trim();
+  document.querySelectorAll('.conn-btn').forEach(function(b){b.disabled=true;b.style.opacity='.5'});
+  feedback(chosen===correct,correct);
+  show('nextBtn');
+}
+
+function checkFam(){
+  if(S.answered)return;S.answered=true;
+  var correct=JSON.parse(ge('famBox').dataset.correct||'[]');
+  var sel=[];
+  document.querySelectorAll('.fp.sel').forEach(function(b){sel.push(b.dataset.word)});
+  var allRight=correct.every(function(w){return sel.indexOf(w)>=0})&&sel.every(function(w){return correct.indexOf(w)>=0});
+  document.querySelectorAll('.fp').forEach(function(b){
+    var w=b.dataset.word;
+    b.classList.remove('sel');
+    if(correct.indexOf(w)>=0)b.classList.add('ok');
+    else if(sel.indexOf(w)>=0)b.classList.add('no');
+    b.disabled=true;b.style.pointerEvents='none';
+  });
+  feedback(allRight,correct.join(', '));
+  show('nextBtn');
+}
+
+function feedback(ok,ans){
+  if(ok){S.ok++;ge('fbOk').style.display='block';}
+  else{S.no++;ge('fbNo').style.display='block';ge('fbAns').textContent=ans;}
+  ge('scOk').textContent='✓ '+S.ok;ge('scNo').textContent='✗ '+S.no;
+}
+
+// ── NEXT / DONE ───────────────────────────────────────────
+function nextQ(){
+  S.cur++;
+  if(S.cur>=S.qs.length)showDone();else renderQ();
+}
+
+function showDone(){
+  hide('gameScreen');show('doneScreen');
+  var tot=S.qs.length;var pct=Math.round(S.ok/tot*100);
+  ge('doneScore').textContent=S.ok+' / '+tot;
+  var e,m;
+  if(pct>=90){e='🏆';m='Outstanding! You have exceptional word power.'}
+  else if(pct>=75){e='🎉';m='Excellent work! Your vocabulary is growing fast.'}
+  else if(pct>=60){e='👍';m='Good effort! Keep practising to build your word power.'}
+  else if(pct>=40){e='📚';m='Keep going — every session improves your vocabulary.'}
+  else{e='💪';m='A great start! Review the words and try again.'}
+  ge('doneEmoji').textContent=e;ge('doneMsg').textContent=m;
+  ge('pbFill').style.width='100%';
+}
+
+function goHome(){hide('gameScreen');hide('doneScreen');show('startScreen')}
+</script>
+</body>
+</html>
