@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Power — Nunnas ESL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#2d3561; --navy2:#3d4878;
+  --teal:#00cec9; --teal2:#00b5b0; --tealp:#e0fafa;
+  --purple:#a29bfe; --purplep:#eeeeff; --purpled:#6c5ce7;
+  --green:#00b894; --greenp:#e6faf5; --greend:#007a63;
+  --coral:#e17055; --coralp:#fff0ed; --corald:#a84f20;
+  --amber:#f9a825; --amberp:#fff8e6;
+  --red:#d63031; --redp:#fff0f0;
+  --text:#2d2d2d; --muted:#6b7280;
+  --border:#e5e7f0; --bg:#f5f6ff; --rad:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 50%,#4a5490 100%);padding:2.5rem 1.25rem 5rem;position:relative;overflow:hidden;text-align:center}
+.hero-circle1{position:absolute;width:300px;height:300px;border-radius:50%;background:var(--teal);opacity:0.12;filter:blur(60px);top:-80px;left:-60px}
+.hero-circle2{position:absolute;width:250px;height:250px;border-radius:50%;background:var(--purple);opacity:0.15;filter:blur(60px);bottom:-60px;right:-40px}
+.logo-badge{display:inline-block;background:white;border-radius:12px;padding:8px 20px;font-family:'Lora',serif;font-weight:700;color:var(--navy);font-size:1rem;margin-bottom:1rem;position:relative;z-index:2}
+.hero h1{font-family:'Lora',serif;font-size:2.4rem;font-weight:700;color:white;position:relative;z-index:2;line-height:1.2}
+.hero h1 em{color:var(--teal);font-style:italic}
+.hero p{color:rgba(255,255,255,0.8);margin-top:0.5rem;font-size:1rem;position:relative;z-index:2}
+
+/* WRAP */
+.wrap{max-width:720px;margin:-2.5rem auto 0;padding:0 1.25rem 4rem;position:relative;z-index:10}
+
+/* CARDS */
+.card{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,0.10);padding:1.5rem;margin-bottom:1.25rem}
+
+/* PANELS */
+.panel{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,0.10);margin-bottom:1.25rem;overflow:hidden}
+.phdr{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;user-select:none;background:white}
+.phdr h2{font-size:1rem;font-weight:800;color:var(--navy)}
+.ti{font-size:1.2rem;color:var(--muted);transition:transform 0.2s}
+.phdr.open .ti{transform:rotate(180deg)}
+.pbody{display:none;padding:0 1.5rem 1.5rem;border-top:2px solid var(--border)}
+.pbody.open{display:block}
+
+/* LEVEL PILLS */
+.level-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem}
+.lvl{padding:6px 16px;border-radius:30px;font-weight:800;font-size:0.8rem;cursor:pointer;border:2px solid transparent;transition:all 0.15s}
+.lvl-A1{background:var(--greenp);color:var(--greend);border-color:var(--green)}
+.lvl-A2{background:#e8f4fd;color:#065a9e;border-color:#0984e3}
+.lvl-B1{background:var(--purplep);color:var(--purpled);border-color:var(--purpled)}
+.lvl-B2{background:var(--coralp);color:var(--corald);border-color:var(--coral)}
+.lvl-C1{background:var(--redp);color:var(--red);border-color:var(--red)}
+.lvl.active{box-shadow:0 0 0 3px rgba(0,0,0,0.15)}
+
+/* MODE PILLS */
+.mode-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem}
+.mode-pill{padding:8px 16px;border-radius:30px;font-weight:700;font-size:0.82rem;cursor:pointer;border:2px solid var(--border);background:white;color:var(--muted);transition:all 0.15s}
+.mode-pill.active{background:var(--navy);color:white;border-color:var(--navy)}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:12px 28px;border-radius:30px;font-weight:800;font-size:0.95rem;cursor:pointer;border:none;transition:all 0.15s;font-family:'Nunito',sans-serif}
+.btn-navy{background:var(--navy);color:white}
+.btn-navy:hover{background:var(--navy2)}
+.btn-teal{background:var(--teal);color:white}
+.btn-teal:hover{background:var(--teal2)}
+.btn-outline{background:white;color:var(--navy);border:2px solid var(--navy)}
+.btn-outline:hover{background:var(--bg)}
+.btn-sm{padding:8px 18px;font-size:0.82rem}
+.btn-full{width:100%;display:block;text-align:center}
+
+/* PROGRESS */
+.pb-wrap{background:#e5e7f0;border-radius:30px;height:10px;margin-bottom:1rem;overflow:hidden}
+.pb-fill{background:linear-gradient(90deg,var(--teal),var(--purple));height:100%;border-radius:30px;transition:width 0.4s ease;width:0%}
+
+/* Q DISPLAY */
+.q-display{background:linear-gradient(135deg,var(--purplep),var(--tealp));border-radius:var(--rad);border:2px solid var(--purple);padding:1.5rem;margin-bottom:1.25rem;text-align:center}
+.q-pt{font-size:0.8rem;font-weight:700;color:var(--purpled);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.q-sentence{font-family:'Lora',serif;font-size:1.4rem;font-weight:700;color:var(--navy);line-height:1.4}
+.q-sub{font-size:0.9rem;color:var(--muted);margin-top:0.5rem}
+.q-mode-badge{display:inline-block;background:var(--navy);color:white;font-size:0.72rem;font-weight:800;padding:3px 12px;border-radius:20px;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.05em}
+
+/* OPTIONS */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem}
+.opt{background:white;border:2px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.95rem;text-align:left;display:flex;align-items:center;gap:10px;transition:all 0.15s;color:var(--text)}
+.opt:hover{border-color:var(--purpled);background:var(--purplep)}
+.opt-l{width:28px;height:28px;border-radius:50%;background:var(--bg);font-weight:900;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy)}
+.opt.correct{border-color:var(--green);background:var(--greenp);color:var(--greend)}
+.opt.correct .opt-l{background:var(--green);color:white}
+.opt.wrong{border-color:var(--coral);background:var(--coralp);color:var(--corald)}
+.opt.wrong .opt-l{background:var(--coral);color:white}
+.opt.selected{border-color:var(--purpled);background:var(--purplep)}
+.opt.selected .opt-l{background:var(--purpled);color:white}
+.opt:disabled,.opt[disabled]{cursor:default;pointer-events:none}
+
+/* TYPE INPUT */
+.type-row{display:flex;gap:0.5rem;margin-bottom:1rem}
+.type-input{flex:1;padding:12px 16px;border-radius:12px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:1rem;font-weight:600;outline:none;transition:border-color 0.15s}
+.type-input:focus{border-color:var(--purpled)}
+.test-btn{padding:12px 20px;border-radius:12px;border:none;background:var(--navy);color:white;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:0.9rem}
+.test-btn:hover{background:var(--navy2)}
+
+/* FEEDBACK BOX */
+.fb-box{border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;font-weight:700;font-size:0.95rem;display:none}
+.fb-correct{border:2px solid var(--green);background:var(--greenp);color:var(--greend)}
+.fb-wrong{border:2px solid var(--coral);background:var(--coralp);color:var(--corald)}
+
+/* SCORE BADGES */
+.score-row{display:flex;gap:0.75rem;align-items:center;margin-bottom:1rem}
+.okct,.noct{padding:5px 14px;border-radius:20px;font-weight:800;font-size:0.9rem}
+.okct{background:var(--greenp);color:var(--greend)}
+.noct{background:var(--coralp);color:var(--corald)}
+
+/* DONE SCREEN */
+.done-screen{text-align:center;padding:2rem 1rem}
+.done-emoji{font-size:4rem;margin-bottom:1rem}
+.done-score{font-size:3rem;font-weight:900;color:var(--navy);font-family:'Lora',serif}
+.done-msg{color:var(--muted);margin:0.5rem 0 1.5rem}
+
+/* SETUP / HOW-TO */
+.sbox{background:#1e2340;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.sbox-lbl{color:var(--teal);font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem}
+.sbox input[type=text]{width:100%;padding:10px 14px;border-radius:8px;border:2px solid #3d4878;background:#2d3561;color:white;font-family:'Nunito',sans-serif;font-size:0.9rem;outline:none;margin-bottom:0.5rem}
+.sbox input[type=text]:focus{border-color:var(--teal)}
+.sbox input[type=text]::placeholder{color:rgba(255,255,255,0.4)}
+.url-row{display:flex;gap:0.5rem}
+.url-row input{flex:1;margin-bottom:0}
+.sstat{font-size:0.82rem;margin-top:0.5rem;color:rgba(255,255,255,0.6)}
+.sstat.ok{color:var(--teal)}
+.sstat.err{color:var(--coral)}
+.gen-area{width:100%;padding:10px;border-radius:8px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:0.8rem;resize:none;margin-top:0.5rem}
+
+.how-to{background:var(--bg);border-radius:12px;padding:1.25rem;margin-top:1rem}
+.how-to h3{font-size:0.9rem;font-weight:800;color:var(--navy);margin-bottom:1rem}
+.step{display:flex;gap:1rem;margin-bottom:0.75rem;align-items:flex-start}
+.sn{width:28px;height:28px;border-radius:50%;background:var(--navy);color:white;font-weight:900;font-size:0.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:0.85rem;color:var(--text);line-height:1.5}
+code{background:var(--border);padding:1px 6px;border-radius:4px;font-size:0.8rem}
+
+/* LOAD */
+.load-box{text-align:center;padding:2rem}
+.spinner{font-size:2rem;animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SHEET TABS (for teacher sheet setup) */
+.sheet-tabs{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+.sh-tab{padding:5px 12px;border-radius:20px;font-size:0.78rem;font-weight:700;border:2px solid var(--border);background:white;cursor:pointer;color:var(--muted)}
+.sh-tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+
+/* WORD FAMILY LAYOUT */
+.family-grid{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:1rem;justify-content:center}
+.fam-pill{padding:8px 18px;border-radius:30px;font-weight:700;font-size:0.9rem;border:2px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;color:var(--text)}
+.fam-pill:hover{border-color:var(--purpled);background:var(--purplep)}
+.fam-pill.correct{border-color:var(--green);background:var(--greenp);color:var(--greend)}
+.fam-pill.wrong{border-color:var(--coral);background:var(--coralp);color:var(--corald)}
+
+/* ODD ONE OUT GRID */
+.oo-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem}
+
+/* CONNOTATION BINARY */
+.conn-row{display:flex;gap:1rem;justify-content:center;margin-bottom:1.25rem}
+.conn-btn{flex:1;padding:16px;border-radius:var(--rad);font-size:1.1rem;font-weight:900;cursor:pointer;border:3px solid transparent;transition:all 0.2s;font-family:'Nunito',sans-serif}
+.conn-pos{background:var(--greenp);color:var(--greend);border-color:var(--green)}
+.conn-neg{background:var(--coralp);color:var(--corald);border-color:var(--coral)}
+.conn-neu{background:var(--amberp);color:#7a5800;border-color:var(--amber)}
+.conn-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.12)}
+
+/* NEXT BTN */
+.next-wrap{text-align:center;margin-top:0.5rem}
+
+/* START SCREEN */
+.start-section{margin-bottom:1.5rem}
+.start-section h3{font-size:0.85rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.6rem}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .hero h1{font-size:1.8rem}
+  .opts{grid-template-columns:1fr}
+  .conn-row{flex-direction:column}
+  .oo-grid{grid-template-columns:1fr}
+}
+
+/* HIDDEN */
+.hidden{display:none!important}
+
+/* MINI BADGE */
+.mini-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:0.72rem;font-weight:800;margin-left:0.4rem}
+.badge-mode{background:var(--amberp);color:#7a5800}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-circle1"></div>
+  <div class="hero-circle2"></div>
+  <div class="logo-badge">🇬🇧 Nunnas ESL</div>
+  <h1>Word <em>Power</em></h1>
+  <p>Synonyms · Antonyms · Word Families · Prefixes · Suffixes · Register · Connotation</p>
+</div>
+
+<div class="wrap">
+
+  <!-- TEACHER PANEL -->
+  <div class="panel" id="teacherPanel" style="display:none">
+    <div class="phdr" onclick="tog(this)">
+      <h2>⚙️ Teacher Setup</h2><span class="ti">▾</span>
+    </div>
+    <div class="pbody">
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem">Enter your Google Sheets CSV URLs below. Each sheet powers a different game mode. Leave blank to skip that mode.</p>
+
+      <div class="sheet-tabs">
+        <div class="sh-tab active" onclick="showSheetSetup(this,'syn')">Synonyms</div>
+        <div class="sh-tab" onclick="showSheetSetup(this,'ant')">Antonyms</div>
+        <div class="sh-tab" onclick="showSheetSetup(this,'fam')">Word Families</div>
+        <div class="sh-tab" onclick="showSheetSetup(this,'pre')">Prefixes</div>
+        <div class="sh-tab" onclick="showSheetSetup(this,'suf')">Suffixes</div>
+        <div class="sh-tab" onclick="showSheetSetup(this,'reg')">Register</div>
+        <div class="sh-tab" onclick="showSheetSetup(this,'con')">Connotation</div>
+        <div class="sh-tab" onclick="showSheetSetup(this,'odd')">Odd One Out</div>
+      </div>
+
+      <!-- Each sheet input -->
+      <div id="setup-syn">
+        <div class="sbox">
+          <div class="sbox-lbl">Synonyms Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-syn" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('syn')">Test</button>
+          </div>
+          <div class="sstat" id="stat-syn"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Synonyms Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st">Example row: <code>happy, A2, delighted, angry, slow, hungry</code></div></div>
+          <div class="step"><div class="sn">3</div><div class="st">File → Share → Publish to web → Sheet 1 → CSV → Copy URL</div></div>
+        </div>
+      </div>
+      <div id="setup-ant" class="hidden">
+        <div class="sbox">
+          <div class="sbox-lbl">Antonyms Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-ant" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('ant')">Test</button>
+          </div>
+          <div class="sstat" id="stat-ant"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Antonyms Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st">Example row: <code>ancient, B1, modern, old, historic, traditional</code></div></div>
+        </div>
+      </div>
+      <div id="setup-fam" class="hidden">
+        <div class="sbox">
+          <div class="sbox-lbl">Word Families Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-fam" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('fam')">Test</button>
+          </div>
+          <div class="sstat" id="stat-fam"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Word Families Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>root, cefr, noun, verb, adjective, adverb</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st">Example row: <code>create, B1, creation, create, creative, creatively</code></div></div>
+        </div>
+      </div>
+      <div id="setup-pre" class="hidden">
+        <div class="sbox">
+          <div class="sbox-lbl">Prefixes Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-pre" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('pre')">Test</button>
+          </div>
+          <div class="sstat" id="stat-pre"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Prefixes Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>base, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st">Example row: <code>happy, A2, unhappy, rehappy, dishappy, overhappy</code></div></div>
+        </div>
+      </div>
+      <div id="setup-suf" class="hidden">
+        <div class="sbox">
+          <div class="sbox-lbl">Suffixes Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-suf" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('suf')">Test</button>
+          </div>
+          <div class="sstat" id="stat-suf"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Suffixes Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>base, cefr, correct, wrong1, wrong2, wrong3</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st">Example row: <code>teach, A2, teacher, teachful, teaching, teaches</code></div></div>
+        </div>
+      </div>
+      <div id="setup-reg" class="hidden">
+        <div class="sbox">
+          <div class="sbox-lbl">Register Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-reg" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('reg')">Test</button>
+          </div>
+          <div class="sstat" id="stat-reg"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Register Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, register, wrong1, wrong2, wrong3</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st"><code>register</code> value must be: <code>formal</code> or <code>informal</code></div></div>
+          <div class="step"><div class="sn">3</div><div class="st">Example row: <code>obtain, B1, formal, informal, neutral, slang</code></div></div>
+        </div>
+      </div>
+      <div id="setup-con" class="hidden">
+        <div class="sbox">
+          <div class="sbox-lbl">Connotation Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-con" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('con')">Test</button>
+          </div>
+          <div class="sstat" id="stat-con"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Connotation Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word, cefr, connotation</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st"><code>connotation</code> must be: <code>positive</code>, <code>negative</code>, or <code>neutral</code></div></div>
+          <div class="step"><div class="sn">3</div><div class="st">Example row: <code>determined, B1, positive</code></div></div>
+        </div>
+      </div>
+      <div id="setup-odd" class="hidden">
+        <div class="sbox">
+          <div class="sbox-lbl">Odd One Out Sheet CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="url-odd" placeholder="Paste published CSV URL…">
+            <button class="test-btn" onclick="testSheet('odd')">Test</button>
+          </div>
+          <div class="sstat" id="stat-odd"></div>
+        </div>
+        <div class="how-to">
+          <h3>📋 Odd One Out Sheet Format</h3>
+          <div class="step"><div class="sn">1</div><div class="st">Columns: <code>word1, word2, word3, odd, cefr, reason</code></div></div>
+          <div class="step"><div class="sn">2</div><div class="st">Example row: <code>dog, cat, horse, table, A1, table is not an animal</code></div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.25rem">
+        <p style="font-size:0.85rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem">🔗 Generate Student Link</p>
+        <button class="btn btn-teal btn-sm" onclick="generateLink()">Generate Link</button>
+        <textarea class="gen-area" id="genLink" rows="3" readonly placeholder="Your student link will appear here…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOAD BOX -->
+  <div class="load-box hidden" id="loadBox">
+    <div class="spinner">⏳</div>
+    <p style="color:var(--muted);margin-top:0.5rem">Loading content…</p>
+  </div>
+
+  <!-- ERROR BOX -->
+  <div class="card hidden" id="errBox" style="border-color:var(--coral);background:var(--coralp)">
+    <p style="font-weight:700;color:var(--corald)" id="errMsg"></p>
+  </div>
+
+  <!-- START SCREEN -->
+  <div id="startScreen">
+    <div class="card">
+      <div class="start-section">
+        <h3>Choose Level</h3>
+        <div class="level-row" id="levelRow">
+          <div class="lvl lvl-A1 active" onclick="pickLevel(this,'A1')">A1</div>
+          <div class="lvl lvl-A2" onclick="pickLevel(this,'A2')">A2</div>
+          <div class="lvl lvl-B1" onclick="pickLevel(this,'B1')">B1</div>
+          <div class="lvl lvl-B2" onclick="pickLevel(this,'B2')">B2</div>
+          <div class="lvl lvl-C1" onclick="pickLevel(this,'C1')">C1</div>
+        </div>
+      </div>
+      <div class="start-section">
+        <h3>Choose Game Mode</h3>
+        <div class="mode-row" id="modeRow">
+          <div class="mode-pill active" onclick="pickMode(this,'battle')">⚡ Word Power Battle</div>
+          <div class="mode-pill" onclick="pickMode(this,'syn')">🔵 Synonym Sprint</div>
+          <div class="mode-pill" onclick="pickMode(this,'ant')">🔴 Antonym Attack</div>
+          <div class="mode-pill" onclick="pickMode(this,'fam')">🌿 Word Family Race</div>
+          <div class="mode-pill" onclick="pickMode(this,'pre')">➕ Prefix Builder</div>
+          <div class="mode-pill" onclick="pickMode(this,'suf')">🔧 Suffix Builder</div>
+          <div class="mode-pill" onclick="pickMode(this,'odd')">🔎 Odd One Out</div>
+          <div class="mode-pill" onclick="pickMode(this,'reg')">🎩 Formal or Informal</div>
+          <div class="mode-pill" onclick="pickMode(this,'con')">💚 Connotation</div>
+        </div>
+      </div>
+      <button class="btn btn-navy btn-full" onclick="startGame()">Start Playing →</button>
+    </div>
+
+    <!-- DEMO NOTE -->
+    <div class="card" style="border-color:var(--amber);background:var(--amberp)">
+      <p style="font-size:0.85rem;color:#7a5800;font-weight:700">⚠️ No sheet URLs detected. The app is running on built-in demo content. Add your Google Sheets URLs via the Teacher panel to load your own content.</p>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="gameScreen" class="hidden">
+    <div class="card" style="padding:1rem 1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+        <div class="score-row" style="margin:0">
+          <span class="okct" id="scoreOk">✓ 0</span>
+          <span class="noct" id="scoreNo">✗ 0</span>
+        </div>
+        <span style="font-size:0.82rem;color:var(--muted);font-weight:700" id="qCounter">Q 1 / 10</span>
+      </div>
+      <div class="pb-wrap"><div class="pb-fill" id="pbFill"></div></div>
+    </div>
+
+    <div class="q-display">
+      <div class="q-mode-badge" id="modeBadge">Synonym Sprint</div>
+      <div class="q-pt" id="qPt">Question 1 of 10</div>
+      <div class="q-sentence" id="qWord">happy</div>
+      <div class="q-sub" id="qSub">Choose the closest synonym</div>
+    </div>
+
+    <!-- Multiple choice options -->
+    <div class="opts" id="optsBox"></div>
+
+    <!-- Family pills (word family mode) -->
+    <div id="famBox" class="hidden">
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;font-weight:600">Select all members of this word family:</p>
+      <div class="family-grid" id="famPills"></div>
+    </div>
+
+    <!-- Connotation buttons -->
+    <div id="connBox" class="hidden">
+      <div class="conn-row">
+        <button class="conn-btn conn-pos" onclick="checkConn('positive')">💚 Positive</button>
+        <button class="conn-btn conn-neg" onclick="checkConn('negative')">🔴 Negative</button>
+        <button class="conn-btn conn-neu" onclick="checkConn('neutral')">⚪ Neutral</button>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="fb-box fb-correct" id="fbCorrect">✅ Correct! Well done.</div>
+    <div class="fb-box fb-wrong" id="fbWrong">❌ Not quite. The correct answer was: <span id="fbAns"></span></div>
+
+    <div class="next-wrap">
+      <button class="btn btn-navy hidden" id="nextBtn" onclick="nextQ()">Next Question →</button>
+    </div>
+  </div>
+
+  <!-- DONE SCREEN -->
+  <div id="doneScreen" class="hidden">
+    <div class="card">
+      <div class="done-screen">
+        <div class="done-emoji" id="doneEmoji">🎉</div>
+        <div class="done-score" id="doneScore">8 / 10</div>
+        <div class="done-msg" id="doneMsg">Excellent work! Your vocabulary is growing fast.</div>
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-navy" onclick="restart()">🔄 Play Again</button>
+          <button class="btn btn-outline" onclick="goHome()">🏠 Change Mode</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ─── HELPERS ───────────────────────────────────────────────
+function ge(id){return document.getElementById(id)}
+function show(id){ge(id).classList.remove('hidden')}
+function hide(id){ge(id).classList.add('hidden')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function tog(hdr){
+  hdr.classList.toggle('open');
+  var b=hdr.nextElementSibling;
+  b.classList.toggle('open');
+}
+
+// ─── URL PARAMS ────────────────────────────────────────────
+var p = new URLSearchParams(window.location.search);
+var isTeacher = p.get('teacher') === 'NUNNAS2025';
+var sheetUrls = {
+  syn: p.get('syn') ? decodeURIComponent(p.get('syn')) : '',
+  ant: p.get('ant') ? decodeURIComponent(p.get('ant')) : '',
+  fam: p.get('fam') ? decodeURIComponent(p.get('fam')) : '',
+  pre: p.get('pre') ? decodeURIComponent(p.get('pre')) : '',
+  suf: p.get('suf') ? decodeURIComponent(p.get('suf')) : '',
+  reg: p.get('reg') ? decodeURIComponent(p.get('reg')) : '',
+  con: p.get('con') ? decodeURIComponent(p.get('con')) : '',
+  odd: p.get('odd') ? decodeURIComponent(p.get('odd')) : ''
+};
+
+// ─── STATE ─────────────────────────────────────────────────
+var state = {
+  level: 'A1',
+  mode: 'battle',
+  questions: [],
+  current: 0,
+  correct: 0,
+  wrong: 0,
+  answered: false
+};
+
+// ─── DATA STORES ───────────────────────────────────────────
+var data = {syn:[],ant:[],fam:[],pre:[],suf:[],reg:[],con:[],odd:[]};
+
+// ─── DEMO CONTENT ──────────────────────────────────────────
+var demo = {
+  syn:[
+    {word:'happy',cefr:'A1',correct:'delighted',wrong1:'angry',wrong2:'slow',wrong3:'hungry'},
+    {word:'big',cefr:'A1',correct:'large',wrong1:'tiny',wrong2:'soft',wrong3:'dark'},
+    {word:'tired',cefr:'A2',correct:'exhausted',wrong1:'awake',wrong2:'cheerful',wrong3:'proud'},
+    {word:'angry',cefr:'A2',correct:'furious',wrong1:'calm',wrong2:'joyful',wrong3:'bored'},
+    {word:'smart',cefr:'B1',correct:'intelligent',wrong1:'foolish',wrong2:'lazy',wrong3:'clumsy'},
+    {word:'enormous',cefr:'B1',correct:'huge',wrong1:'tiny',wrong2:'weak',wrong3:'slow'},
+    {word:'difficult',cefr:'B2',correct:'challenging',wrong1:'simple',wrong2:'easy',wrong3:'plain'},
+    {word:'obtain',cefr:'B2',correct:'acquire',wrong1:'lose',wrong2:'forget',wrong3:'ignore'},
+    {word:'elucidate',cefr:'C1',correct:'clarify',wrong1:'confuse',wrong2:'obscure',wrong3:'ignore'},
+    {word:'meticulous',cefr:'C1',correct:'thorough',wrong1:'careless',wrong2:'hasty',wrong3:'vague'}
+  ],
+  ant:[
+    {word:'ancient',cefr:'B1',correct:'modern',wrong1:'old',wrong2:'historic',wrong3:'traditional'},
+    {word:'brave',cefr:'A2',correct:'cowardly',wrong1:'bold',wrong2:'daring',wrong3:'fearless'},
+    {word:'generous',cefr:'B1',correct:'selfish',wrong1:'kind',wrong2:'giving',wrong3:'helpful'},
+    {word:'noisy',cefr:'A1',correct:'quiet',wrong1:'loud',wrong2:'busy',wrong3:'angry'},
+    {word:'complex',cefr:'B2',correct:'simple',wrong1:'hard',wrong2:'detailed',wrong3:'tricky'},
+    {word:'optimistic',cefr:'B2',correct:'pessimistic',wrong1:'hopeful',wrong2:'cheerful',wrong3:'positive'},
+    {word:'gradual',cefr:'C1',correct:'sudden',wrong1:'slow',wrong2:'steady',wrong3:'constant'},
+    {word:'trivial',cefr:'C1',correct:'significant',wrong1:'minor',wrong2:'small',wrong3:'unimportant'}
+  ],
+  fam:[
+    {root:'create',cefr:'B1',noun:'creation',verb:'create',adjective:'creative',adverb:'creatively'},
+    {root:'educate',cefr:'B1',noun:'education',verb:'educate',adjective:'educational',adverb:'educationally'},
+    {root:'communicate',cefr:'B2',noun:'communication',verb:'communicate',adjective:'communicative',adverb:'communicatively'},
+    {root:'develop',cefr:'B1',noun:'development',verb:'develop',adjective:'developmental',adverb:'developmentally'},
+    {root:'analyse',cefr:'C1',noun:'analysis',verb:'analyse',adjective:'analytical',adverb:'analytically'}
+  ],
+  pre:[
+    {base:'happy',cefr:'A2',correct:'unhappy',wrong1:'rehappy',wrong2:'mishappy',wrong3:'overhappy'},
+    {base:'possible',cefr:'A2',correct:'impossible',wrong1:'unpossible',wrong2:'mispossible',wrong3:'prepossible'},
+    {base:'honest',cefr:'B1',correct:'dishonest',wrong1:'unhonest',wrong2:'rehonest',wrong3:'mishonest'},
+    {base:'understand',cefr:'B1',correct:'misunderstand',wrong1:'disunderstand',wrong2:'ununderstand',wrong3:'preunderstand'},
+    {base:'behave',cefr:'B2',correct:'misbehave',wrong1:'disbehave',wrong2:'unbehave',wrong3:'prebehave'},
+    {base:'operate',cefr:'C1',correct:'cooperate',wrong1:'preoperate',wrong2:'misoperate',wrong3:'disoperate'}
+  ],
+  suf:[
+    {base:'teach',cefr:'A1',correct:'teacher',wrong1:'teachful',wrong2:'teaches',wrong3:'teachness'},
+    {base:'care',cefr:'A2',correct:'careful',wrong1:'careness',wrong2:'carely',wrong3:'caring'},
+    {base:'develop',cefr:'B1',correct:'development',wrong1:'developer',wrong2:'developed',wrong3:'developness'},
+    {base:'beauty',cefr:'B1',correct:'beautiful',wrong1:'beautiness',wrong2:'beautier',wrong3:'beautisome'},
+    {base:'manage',cefr:'B2',correct:'management',wrong1:'manageful',wrong2:'manageous',wrong3:'managely'},
+    {base:'create',cefr:'C1',correct:'creativity',wrong1:'createness',wrong2:'createful',wrong3:'createment'}
+  ],
+  reg:[
+    {word:'get',cefr:'A1',register:'informal',wrong1:'formal',wrong2:'neutral',wrong3:'academic'},
+    {word:'obtain',cefr:'B1',register:'formal',wrong1:'informal',wrong2:'slang',wrong3:'neutral'},
+    {word:'kids',cefr:'A1',register:'informal',wrong1:'formal',wrong2:'academic',wrong3:'neutral'},
+    {word:'commence',cefr:'B2',register:'formal',wrong1:'informal',wrong2:'casual',wrong3:'slang'},
+    {word:'chat',cefr:'A2',register:'informal',wrong1:'formal',wrong2:'academic',wrong3:'official'},
+    {word:'facilitate',cefr:'C1',register:'formal',wrong1:'informal',wrong2:'casual',wrong3:'slang'}
+  ],
+  con:[
+    {word:'determined',cefr:'B1',connotation:'positive'},
+    {word:'stubborn',cefr:'B1',connotation:'negative'},
+    {word:'slim',cefr:'A2',connotation:'positive'},
+    {word:'skinny',cefr:'A2',connotation:'negative'},
+    {word:'thrifty',cefr:'B2',connotation:'positive'},
+    {word:'cheap',cefr:'A2',connotation:'negative'},
+    {word:'ambitious',cefr:'B2',connotation:'positive'},
+    {word:'pushy',cefr:'B2',connotation:'negative'},
+    {word:'unique',cefr:'A2',connotation:'positive'},
+    {word:'weird',cefr:'A2',connotation:'negative'}
+  ],
+  odd:[
+    {word1:'dog',word2:'cat',word3:'horse',odd:'table',cefr:'A1',reason:'A table is not an animal'},
+    {word1:'happy',word2:'joyful',word3:'cheerful',odd:'angry',cefr:'A2',reason:'Angry is not a positive feeling'},
+    {word1:'run',word2:'walk',word3:'jump',odd:'sleep',cefr:'A1',reason:'Sleep is not a movement verb'},
+    {word1:'huge',word2:'enormous',word3:'vast',odd:'tiny',cefr:'B1',reason:'Tiny means small, not large'},
+    {word1:'doctor',word2:'nurse',word3:'surgeon',odd:'lawyer',cefr:'B1',reason:'A lawyer is not a healthcare professional'},
+    {word1:'analyse',word2:'examine',word3:'investigate',odd:'ignore',cefr:'B2',reason:'Ignore means to pay no attention'}
+  ]
+};
+
+// ─── INIT ──────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function(){
+  if(isTeacher){
+    show('teacherPanel');
+    // populate inputs from URL
+    Object.keys(sheetUrls).forEach(function(k){
+      var el = ge('url-'+k);
+      if(el && sheetUrls[k]) el.value = sheetUrls[k];
+    });
+    hide('errBox');
+    // hide demo warning if teacher
+    var demoNote = document.querySelector('.card[style*="amber"]');
+    if(demoNote && Object.values(sheetUrls).some(function(v){return v})){
+      demoNote.style.display='none';
+    }
+  }
+
+  // Check if any URLs provided → hide demo warning
+  var hasUrls = Object.values(sheetUrls).some(function(v){return v.length>0});
+  var demoCard = document.querySelector('.card[style*="amber"]');
+  if(hasUrls && demoCard) demoCard.style.display='none';
+
+  // Load data from URLs
+  if(hasUrls) loadAllSheets();
+  else useDemo();
+});
+
+function useDemo(){
+  Object.keys(demo).forEach(function(k){ data[k]=demo[k]; });
+}
+
+// ─── SHEET SETUP TABS ──────────────────────────────────────
+function showSheetSetup(tab, key){
+  document.querySelectorAll('.sh-tab').forEach(function(t){t.classList.remove('active')});
+  tab.classList.add('active');
+  ['syn','ant','fam','pre','suf','reg','con','odd'].forEach(function(k){
+    var el = ge('setup-'+k);
+    if(el){ k===key ? el.classList.remove('hidden') : el.classList.add('hidden'); }
+  });
+}
+
+// ─── SHEET FETCH ───────────────────────────────────────────
+function parseCSV(csv){
+  var lines = csv.trim().split('\n');
+  var headers = lines[0].split(',').map(function(h){return h.trim().toLowerCase().replace(/\r/,'')});
+  return lines.slice(1).map(function(line){
+    var cols = line.split(',');
+    var obj = {};
+    headers.forEach(function(h,i){ obj[h]=(cols[i]||'').trim().replace(/\r/,''); });
+    return obj;
+  }).filter(function(r){ return Object.values(r).some(function(v){return v}); });
+}
+
+function loadSheet(url){
+  return fetch(url).then(function(r){return r.text();}).then(function(csv){return parseCSV(csv);});
+}
+
+function loadAllSheets(){
+  show('loadBox');
+  var promises = Object.keys(sheetUrls).map(function(k){
+    if(!sheetUrls[k]) return Promise.resolve();
+    return loadSheet(sheetUrls[k]).then(function(rows){
+      data[k]=rows;
+    }).catch(function(){ data[k]=demo[k]||[]; });
+  });
+  Promise.all(promises).then(function(){
+    hide('loadBox');
+  });
+}
+
+function testSheet(key){
+  var url = ge('url-'+key).value.trim();
+  var stat = ge('stat-'+key);
+  if(!url){ stat.textContent='Please enter a URL.'; stat.className='sstat err'; return; }
+  stat.textContent='Testing…'; stat.className='sstat';
+  fetch(url).then(function(r){return r.text();}).then(function(csv){
+    var rows = parseCSV(csv);
+    stat.textContent = '✅ Connected — '+rows.length+' rows found. First: '+JSON.stringify(rows[0]);
+    stat.className='sstat ok';
+    data[key]=rows;
+  }).catch(function(){
+    stat.textContent='❌ Could not load. Check the URL and make sure the sheet is published.';
+    stat.className='sstat err';
+  });
+}
+
+function generateLink(){
+  var base = window.location.href.split('?')[0];
+  var params = new URLSearchParams();
+  ['syn','ant','fam','pre','suf','reg','con','odd'].forEach(function(k){
+    var el = ge('url-'+k);
+    if(el && el.value.trim()) params.set(k, encodeURIComponent(el.value.trim()));
+  });
+  ge('genLink').value = base + '?' + params.toString();
+}
+
+// ─── LEVEL & MODE PICKERS ──────────────────────────────────
+function pickLevel(el, lvl){
+  document.querySelectorAll('.lvl').forEach(function(l){l.classList.remove('active')});
+  el.classList.add('active');
+  state.level = lvl;
+}
+function pickMode(el, mode){
+  document.querySelectorAll('.mode-pill').forEach(function(m){m.classList.remove('active')});
+  el.classList.add('active');
+  state.mode = mode;
+}
+
+// ─── QUESTION BUILDERS ─────────────────────────────────────
+var modeLabels = {
+  syn:'Synonym Sprint', ant:'Antonym Attack', fam:'Word Family Race',
+  pre:'Prefix Builder', suf:'Suffix Builder', odd:'Odd One Out',
+  reg:'Formal or Informal', con:'Connotation', battle:'Word Power Battle'
+};
+var modeSubs = {
+  syn:'Choose the closest synonym',
+  ant:'Choose the opposite',
+  fam:'Select all members of this word family',
+  pre:'Choose the correct prefix form',
+  suf:'Choose the correct suffix form',
+  odd:'Which word does NOT belong?',
+  reg:'Is this word formal or informal?',
+  con:'Is the connotation positive, negative, or neutral?',
+  battle:'Mixed vocabulary challenge'
+};
+
+function buildQuestion(mode, item){
+  // Returns a question object ready for display
+  if(mode==='fam'){
+    return {mode:'fam', word:item.root.toUpperCase(), sub:modeSubs.fam, item:item};
+  }
+  if(mode==='con'){
+    return {mode:'con', word:item.word, sub:modeSubs.con, correct:item.connotation, item:item};
+  }
+  if(mode==='odd'){
+    var words = [item.word1, item.word2, item.word3, item.odd];
+    return {mode:'odd', word:'Which word does NOT belong?', sub:words.slice(0,3).join(' · ') + ' · ' + item.odd, correct:item.odd, opts:shuffle(words), reason:item.reason, item:item};
+  }
+  // MC: syn, ant, pre, suf, reg
+  var opts = shuffle([item.correct||item.register, item.wrong1, item.wrong2, item.wrong3].filter(Boolean));
+  var wordDisplay = (mode==='pre'||mode==='suf') ? item.base : item.word;
+  return {mode:mode, word:wordDisplay, sub:modeSubs[mode], correct:item.correct||item.register, opts:opts, item:item};
+}
+
+function getPool(mode){
+  var lvl = state.level;
+  var pool = (data[mode]||[]).filter(function(r){
+    return (r.cefr||'').toUpperCase() === lvl;
+  });
+  // fallback: all levels
+  if(pool.length < 3) pool = data[mode]||[];
+  return pool;
+}
+
+function buildBattle(){
+  var modes = ['syn','ant','pre','suf','odd','reg','con'];
+  var qs = [];
+  modes.forEach(function(m){
+    var pool = getPool(m);
+    if(pool.length>0){
+      var item = pool[Math.floor(Math.random()*pool.length)];
+      qs.push(buildQuestion(m, item));
+    }
+  });
+  // Also add word family if available
+  var famPool = getPool('fam');
+  if(famPool.length>0){
+    var fi = famPool[Math.floor(Math.random()*famPool.length)];
+    qs.push(buildQuestion('fam', fi));
+  }
+  return shuffle(qs).slice(0,10);
+}
+
+function buildSingleMode(mode){
+  var pool = getPool(mode);
+  if(pool.length===0){
+    // fallback to demo
+    pool = (demo[mode]||[]);
+  }
+  pool = shuffle(pool).slice(0, 10);
+  return pool.map(function(item){ return buildQuestion(mode, item); });
+}
+
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=a[i]; a[i]=a[j]; a[j]=t;
+  }
+  return a;
+}
+
+// ─── GAME START ────────────────────────────────────────────
+function startGame(){
+  state.correct=0; state.wrong=0; state.current=0; state.answered=false;
+  state.questions = state.mode==='battle' ? buildBattle() : buildSingleMode(state.mode);
+  if(state.questions.length===0){
+    alert('No content found for this level/mode. Please check your Google Sheets or try another level.');
+    return;
+  }
+  hide('startScreen');
+  show('gameScreen');
+  hide('doneScreen');
+  renderQ();
+}
+
+// ─── RENDER QUESTION ───────────────────────────────────────
+function renderQ(){
+  var q = state.questions[state.current];
+  var total = state.questions.length;
+  state.answered = false;
+
+  // Header
+  ge('qCounter').textContent = 'Q '+(state.current+1)+' / '+total;
+  ge('scoreOk').textContent = '✓ '+state.correct;
+  ge('scoreNo').textContent = '✗ '+state.wrong;
+  ge('pbFill').style.width = (state.current/total*100)+'%';
+  ge('qPt').textContent = 'Question '+(state.current+1)+' of '+total;
+  ge('modeBadge').textContent = modeLabels[q.mode]||q.mode;
+  ge('qWord').textContent = q.word;
+  ge('qSub').textContent = q.sub;
+
+  // Hide feedback
+  ge('fbCorrect').style.display='none';
+  ge('fbWrong').style.display='none';
+  hide('nextBtn');
+
+  // Determine display
+  hide('famBox');
+  ge('optsBox').classList.remove('hidden');
+  ge('connBox').classList.add('hidden');
+
+  if(q.mode==='fam'){
+    ge('optsBox').classList.add('hidden');
+    show('famBox');
+    renderFamilyQ(q);
+  } else if(q.mode==='con'){
+    ge('optsBox').classList.add('hidden');
+    ge('connBox').classList.remove('hidden');
+    ge('qWord').textContent = q.word;
+    // re-enable buttons
+    document.querySelectorAll('.conn-btn').forEach(function(b){b.disabled=false;b.style.opacity='1';});
+  } else {
+    renderMCQ(q);
+  }
+}
+
+function renderMCQ(q){
+  var html='';
+  var labels=['A','B','C','D'];
+  (q.opts||[]).forEach(function(opt,i){
+    html += '<button class="opt" onclick="checkMC(this,\''+esc(opt)+'\')">'
+          + '<span class="opt-l">'+labels[i]+'</span> '+esc(opt)+'</button>';
+  });
+  ge('optsBox').innerHTML = html;
+}
+
+function renderFamilyQ(q){
+  var item = q.item;
+  var correct = [item.noun, item.verb, item.adjective, item.adverb].filter(Boolean);
+  // Add 2-3 distractors (wrong words)
+  var wrong = ['innovation','management','historic','beautifully','creates','doing','running','quickly'].filter(function(w){return correct.indexOf(w)<0;});
+  var all = shuffle(correct.concat(wrong.slice(0,3)));
+  ge('qWord').textContent = item.root.toUpperCase();
+  ge('qSub').textContent = 'Select all members of this word family — then press Check';
+  var html = '';
+  all.forEach(function(w){
+    html += '<button class="fam-pill" onclick="toggleFam(this)" data-word="'+esc(w)+'">'+esc(w)+'</button>';
+  });
+  ge('famPills').innerHTML = html;
+  // store correct
+  ge('famBox').dataset.correct = JSON.stringify(correct);
+  // Add check button
+  ge('famPills').innerHTML += '<br><button class="btn btn-navy btn-sm" style="margin-top:0.75rem" onclick="checkFam()">Check Answers ✓</button>';
+}
+
+function toggleFam(el){
+  if(state.answered) return;
+  el.classList.toggle('selected');
+  if(!el.classList.contains('selected')){
+    el.style.borderColor=''; el.style.background=''; el.style.color='';
+  } else {
+    el.style.borderColor='var(--purpled)'; el.style.background='var(--purplep)'; el.style.color='var(--purpled)';
+  }
+}
+
+// ─── ANSWER CHECKS ─────────────────────────────────────────
+function checkMC(btn, chosen){
+  if(state.answered) return;
+  state.answered=true;
+  var q = state.questions[state.current];
+  var correct = (q.correct||'').toLowerCase().trim();
+  var chosen2 = chosen.toLowerCase().trim();
+
+  document.querySelectorAll('.opt').forEach(function(b){b.disabled=true;});
+
+  if(chosen2===correct){
+    btn.classList.add('correct');
+    showFeedback(true, correct);
+  } else {
+    btn.classList.add('wrong');
+    // highlight correct
+    document.querySelectorAll('.opt').forEach(function(b){
+      if(b.textContent.toLowerCase().trim().indexOf(correct)>=0) b.classList.add('correct');
+    });
+    showFeedback(false, correct);
+  }
+  show('nextBtn');
+}
+
+function checkConn(chosen){
+  if(state.answered) return;
+  state.answered=true;
+  var q = state.questions[state.current];
+  var correct = (q.correct||'').toLowerCase().trim();
+  document.querySelectorAll('.conn-btn').forEach(function(b){b.disabled=true;b.style.opacity='0.5';});
+  if(chosen===correct){
+    showFeedback(true, correct);
+  } else {
+    showFeedback(false, correct);
+  }
+  show('nextBtn');
+}
+
+function checkFam(){
+  if(state.answered) return;
+  state.answered=true;
+  var correct = JSON.parse(ge('famBox').dataset.correct||'[]');
+  var selected = [];
+  document.querySelectorAll('.fam-pill.selected').forEach(function(b){selected.push(b.dataset.word);});
+
+  var allRight = correct.every(function(w){return selected.indexOf(w)>=0;}) && selected.every(function(w){return correct.indexOf(w)>=0;});
+
+  document.querySelectorAll('.fam-pill').forEach(function(b){
+    var w = b.dataset.word;
+    if(!b.dataset.word) return;
+    b.style.borderColor=''; b.style.background=''; b.style.color='';
+    if(correct.indexOf(w)>=0){
+      b.classList.add('correct');
+    } else if(selected.indexOf(w)>=0){
+      b.classList.add('wrong');
+    }
+    b.disabled=true; b.style.pointerEvents='none';
+  });
+
+  if(allRight){
+    showFeedback(true, correct.join(', '));
+  } else {
+    showFeedback(false, correct.join(', '));
+  }
+  show('nextBtn');
+}
+
+function showFeedback(isCorrect, ans){
+  if(isCorrect){
+    state.correct++;
+    ge('fbCorrect').style.display='block';
+    ge('fbCorrect').textContent='✅ Correct! Well done.';
+  } else {
+    state.wrong++;
+    ge('fbWrong').style.display='block';
+    ge('fbAns').textContent = ans;
+  }
+  ge('scoreOk').textContent='✓ '+state.correct;
+  ge('scoreNo').textContent='✗ '+state.wrong;
+}
+
+// ─── NEXT / DONE ───────────────────────────────────────────
+function nextQ(){
+  state.current++;
+  if(state.current >= state.questions.length){
+    showDone();
+  } else {
+    renderQ();
+  }
+}
+
+function showDone(){
+  hide('gameScreen');
+  show('doneScreen');
+  var total = state.questions.length;
+  var pct = Math.round(state.correct/total*100);
+  ge('doneScore').textContent = state.correct + ' / ' + total;
+  var emoji, msg;
+  if(pct>=90){emoji='🏆';msg='Outstanding! You have exceptional word power.';}
+  else if(pct>=75){emoji='🎉';msg='Excellent work! Your vocabulary is growing fast.';}
+  else if(pct>=60){emoji='👍';msg='Good effort! Keep practising to build your word power.';}
+  else if(pct>=40){emoji='📚';msg='Keep going — every session improves your vocabulary.';}
+  else{emoji='💪';msg='A great start! Review the words and try again.';}
+  ge('doneEmoji').textContent=emoji;
+  ge('doneMsg').textContent=msg;
+  ge('pbFill').style.width='100%';
+}
+
+function restart(){
+  startGame();
+}
+function goHome(){
+  hide('gameScreen');
+  hide('doneScreen');
+  show('startScreen');
+}
+</script>
+</body>
+</html>
