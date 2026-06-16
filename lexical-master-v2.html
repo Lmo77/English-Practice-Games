@@ -244,6 +244,7 @@ hr.div{border:none;border-top:2px solid var(--border);margin:1rem 0}
   .match-item{flex:1;min-width:120px}
   .binary-row{flex-direction:column}
 }
+.lic{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </head>
 <body>
@@ -259,7 +260,7 @@ hr.div{border:none;border-top:2px solid var(--border);margin:1rem 0}
 
 <!-- TEACHER PANEL -->
 <div class="panel" id="teacherPanel" style="display:none">
-  <div class="phdr" onclick="tog(this)"><h2>⚙️ Teacher Setup</h2><span class="ti">▾</span></div>
+  <div class="phdr" onclick="tog(this)"><h2><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Teacher Setup</h2><span class="ti"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></div>
   <div class="pbody">
     <div class="sbox">
       <div class="sbox-lbl">Sheet 1 — Phrasal Verbs (CSV)</div>
@@ -317,7 +318,7 @@ hr.div{border:none;border-top:2px solid var(--border);margin:1rem 0}
 
 <!-- LOAD SCREEN -->
 <div id="scrLoad" class="screen active">
-  <div class="card load-box"><div class="spinner">⏳</div><p style="margin-top:0.7rem">Loading content…</p></div>
+  <div class="card load-box"><div class="spinner"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.17a2 2 0 0 0-.59-1.41L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22"/><path d="M7 2v4.17a2 2 0 0 0 .59 1.41L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/></svg></div><p style="margin-top:0.7rem">Loading content…</p></div>
 </div>
 
 <!-- HOME SCREEN -->
@@ -350,7 +351,7 @@ hr.div{border:none;border-top:2px solid var(--border);margin:1rem 0}
     <div class="done-score" id="doneScore">8 / 10</div>
     <div class="done-msg" id="doneMsg">Excellent work!</div>
     <div class="done-stats" id="doneStats"></div>
-    <button class="btn-primary" id="doneAgain" onclick="replayLast()">🔁 Play Again</button>
+    <button class="btn-primary" id="doneAgain" onclick="replayLast()"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg> Play Again</button>
     <button class="btn-secondary" onclick="showHome()" style="width:100%;margin-top:0.6rem;display:block;text-align:center">🏠 Home</button>
   </div>
 </div>
@@ -558,7 +559,7 @@ function buildLevelRow(){
 }
 
 var SECTIONS=[
-  {id:'pv',icon:'🔄',title:'Phrasal Verb Master',sub:'Meaning, context & error spotting',acts:[
+  {id:'pv',icon:'<svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>',title:'Phrasal Verb Master',sub:'Meaning, context & error spotting',acts:[
     {id:'pv_meaning',icon:'🎯',title:'Meaning Match',desc:'What does the phrasal verb mean?'},
     {id:'pv_context',icon:'📝',title:'Context Choice',desc:'Choose the correct phrasal verb to complete the sentence'},
     {id:'pv_error', icon:'🔍',title:'Spot the Error',desc:'Is this sentence correct or incorrect?'},

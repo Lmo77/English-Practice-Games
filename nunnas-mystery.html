@@ -205,6 +205,7 @@ code{background:rgba(255,255,255,.1);padding:1px 6px;border-radius:4px;font-size
   .url-row{flex-direction:column}
   .case-grid{grid-template-columns:1fr 1fr}
 }
+.lic{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </head>
 <body>
@@ -293,7 +294,7 @@ function renderTeacher(){
     <div class="tpanel">
       <div class="tphdr" onclick="togTP('cs','cs_ti')">
         <h2>📋 Step 1 — Add Your Case Sheets</h2>
-        <span class="tti" id="cs_ti" style="transform:rotate(180deg)">▾</span>
+        <span class="tti" id="cs_ti" style="transform:rotate(180deg)"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
       </div>
       <div class="tpbody open" id="cs_body">
 
@@ -305,7 +306,7 @@ function renderTeacher(){
           <div class="tstep"><div class="tsn">4</div><div class="tst">Paste the URL below. Add one row per case. Click <strong style="color:white">Test</strong> to check it loads.</div></div>
         </div>
 
-        <a href="#" onclick="toggleSheetTemplate(event)" style="font-size:.8rem;color:var(--teal);font-weight:700;display:inline-block;margin-bottom:.7rem">📊 Show column template ▾</a>
+        <a href="#" onclick="toggleSheetTemplate(event)" style="font-size:.8rem;color:var(--teal);font-weight:700;display:inline-block;margin-bottom:.7rem">📊 Show column template <svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a>
         <div id="sheetTpl" style="display:none;overflow-x:auto;margin-bottom:.9rem">
           <table class="sheet-tbl">
             <thead><tr><th>page_id</th><th>path_type</th><th>story_text</th><th>choice_a</th><th>choice_b</th><th>choice_c</th><th>cefr</th><th>case_name</th></tr></thead>
@@ -337,7 +338,7 @@ function renderTeacher(){
     <div class="tpanel">
       <div class="tphdr" onclick="togTP('rd','rd_ti')">
         <h2>📊 Step 2 — Progress Tracking (Upstash Redis)</h2>
-        <span class="tti" id="rd_ti">▾</span>
+        <span class="tti" id="rd_ti"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
       </div>
       <div class="tpbody" id="rd_body">
         <p class="redis-note">Optional but recommended. Students' names and earned endings are saved to your Redis database so you can view their progress at any time.</p>
@@ -365,7 +366,7 @@ function renderTeacher(){
     <div class="tpanel">
       <div class="tphdr" onclick="togTP('gl','gl_ti')">
         <h2>🔗 Step 3 — Generate Student Link</h2>
-        <span class="tti" id="gl_ti" style="transform:rotate(180deg)">▾</span>
+        <span class="tti" id="gl_ti" style="transform:rotate(180deg)"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
       </div>
       <div class="tpbody open" id="gl_body">
         <p style="font-size:.84rem;color:rgba(255,255,255,.55);margin-bottom:1rem;line-height:1.6">This encodes all your case sheet URLs (and Redis credentials if entered) into a single shareable link. Give this link to your students — they open it directly in their browser. No login needed.</p>
@@ -384,11 +385,11 @@ function renderTeacher(){
     <div class="tpanel">
       <div class="tphdr" onclick="togTP('lg','lg_ti')">
         <h2>🏆 Progress Log</h2>
-        <span class="tti" id="lg_ti">▾</span>
+        <span class="tti" id="lg_ti"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
       </div>
       <div class="tpbody" id="lg_body">
         <p style="font-size:.84rem;color:rgba(255,255,255,.55);margin-bottom:.9rem">Shows all students who have completed at least one ending. Requires Upstash Redis to be configured above.</p>
-        <button class="tbtn" onclick="loadProgressLog()">🔄 Load Progress</button>
+        <button class="tbtn" onclick="loadProgressLog()"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> Load Progress</button>
         <div id="logArea" style="margin-top:1rem"></div>
       </div>
     </div>
@@ -883,7 +884,7 @@ function doEnding(page,pt){
     ${storyExtra}
     <div class="end-msg">${m.msg}</div>
     <div class="end-acts">
-      <button class="btn btn-navy" onclick="startCase(G.allCases.indexOf(G.currentCase))">🔄 Play Again</button>
+      <button class="btn btn-navy" onclick="startCase(G.allCases.indexOf(G.currentCase))"><svg class="lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> Play Again</button>
       <button class="btn btn-ghost" onclick="showCaseSelect([])">📁 Other Cases</button>
     </div>`;
   ge('endWrap').style.display='block';
